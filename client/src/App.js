@@ -3,6 +3,7 @@ import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import './App.css';
+import BeefDishes from "./components/BeefDishes.js"
 
 function App() {
   const [recipes, setRecipes] = useState([]);
@@ -32,6 +33,8 @@ function App() {
 
   return (
     <div className="App">
+
+
       <Slider {...sliderSettings}>
         {recipes.map(recipe => (
           <div key={recipe._id}>
@@ -60,6 +63,7 @@ function App() {
         }
       </Slider >
     </div >
+
   );
 }
 

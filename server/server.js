@@ -1,7 +1,11 @@
 import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
+
+import BeefDish from "./model/BeefDishes.js";
+
 import Recipe from './model/Recipe.js';
+
 dotenv.config();
 import path from "path";
 import url from "url";
@@ -11,6 +15,8 @@ const __dirname = path.dirname(__filename);
 const app = express();
 app.use(express.json());
 const PORT = 5000;
+
+
 
 async function connectToMongoose() {
     await mongoose.connect(process.env.URL);
@@ -24,7 +30,20 @@ app.get("/api/recipes", async (req, res) => {
     res.json(recipes);
 });
 
+
+app.get("/api/beefDishes", async (req,res) => {
+    
+        const beefDishes = await BeefDish.find()
+        res.json(beefDishes)
+   
+})
+
+
+
+
+
 app.use(express.static(path.join(__dirname, '../client')));
+
 
 app.listen(PORT, () => {
     console.log(`This server is running on PORT ${PORT}`);
