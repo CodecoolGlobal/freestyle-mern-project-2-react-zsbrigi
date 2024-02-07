@@ -5,7 +5,8 @@ const recipeSchema = new Schema({
     mealName: String,
     ingredients: Array,
     description: String,
-    time: String
+    time: String,
+    type: String
 })
 
 export default model('Recipe', recipeSchema);

@@ -1,12 +1,8 @@
 import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
-import ChickenDish from "./model/ChickenDish.js";
-import BeefDish from "./model/BeefDishes.js";
 import Recipe from './model/Recipe.js';
-import DessertDish from "./model/DessertDish.js";
-import PastaDish from "./model/PastaDish.js";
-import VegetarianDish from "./model/VegetarianDish.js"
+
 
 dotenv.config();
 import path from "path";
@@ -33,28 +29,28 @@ app.get("/api/recipes", async (req, res) => {
 });
 
 
-app.get("/api/beefDishes", async (req, res) => {
-    const beefDishes = await BeefDish.find()
+app.get("/api/beef", async (req, res) => {
+    const beefDishes = await Recipe.find({type: "beef"})
     res.json(beefDishes)
 })
 
-app.get("/api/chickenDishes", async (req, res) => {
-    const chickenDishes = await ChickenDish.find()
+app.get("/api/chicken", async (req, res) => {
+    const chickenDishes = await Recipe.find({type: "chicken"})
     res.json(chickenDishes)
 })
 
-app.get("/api/pastaDishes", async (req, res) => {
-    const pastaDishes = await PastaDish.find()
+app.get("/api/pasta", async (req, res) => {
+    const pastaDishes = await Recipe.find({type: "pasta"})
     res.json(pastaDishes)
 })
 
-app.get("/api/dessertDishes", async (req, res) => {
-    const dessertDish = await DessertDish.find()
+app.get("/api/dessert", async (req, res) => {
+    const dessertDish = await Recipe.find({type: "dessert"})
     res.json(dessertDish)
 })
 
-app.get("/api/vegetarianDishes", async (req, res) => {
-    const vegetarianDishes = await VegetarianDish.find()
+app.get("/api/vegetarian", async (req, res) => {
+    const vegetarianDishes = await Recipe.find({type: "vegetarian"})
     res.json(vegetarianDishes)
 })
 

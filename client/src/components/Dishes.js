@@ -1,9 +1,14 @@
 import { useEffect, useState } from "react"
-import IngredientsTable from "./IngredientsTable";
+import IngredientsTable from "./IngredientsTable"
+import { useParams } from "react-router-dom"
+function Dishes() {
+	const [beefDishes, setBeefdishes] = useState([])
 
-function PastaDishes() {
-	const [pastaDishes, setPastaDishes] = useState([])
+    let {dishType} = useParams()
 
+    console.log(dishType)
+
+   
 
 	useEffect(() => {
 		async function fetchdata(url) {
@@ -11,17 +16,17 @@ function PastaDishes() {
 				const response = await fetch(url)
 				const data = await response.json()
 				console.log(data)
-				setPastaDishes(data)
+				setBeefdishes(data)
 			} catch (error) {
 				console.error(error)
 			}
 		}
-		fetchdata("/api/pastaDishes")
+		fetchdata(`/api/${dishType}`)
 	}, [])
 
 	return (
 		<div className="recipeList">
-			{pastaDishes.map((dish) => (
+			{beefDishes.map((dish) => (
 				<div className="dish" key={dish._id}>
 					<h2>{dish.mealName}</h2>
 					<img src={`/src/Assets/${dish.mealName.replaceAll(" ", "")}.jpg`} alt={dish.mealName}></img>
@@ -37,4 +42,4 @@ function PastaDishes() {
 
 }
 
-export default PastaDishes
+export default Dishes
