@@ -28,6 +28,11 @@ img {
   border-radius: 30px;
 }
 
+a{
+  text-decoration: none;
+  color:#1a1a1a;
+}
+
 body {
   margin-top: 63px;
   padding: 0px;
@@ -68,7 +73,7 @@ body {
 }
 
 
-.navbar li:hover {
+.navbar a:hover {
   color: #088178;
 }
 

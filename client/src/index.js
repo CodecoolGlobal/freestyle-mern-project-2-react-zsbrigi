@@ -7,8 +7,7 @@ import reportWebVitals from './reportWebVitals';
 import MaingPage from './mainPage Components/MainPage.js';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 
-import BeefDishes from "./components/Dishes.js";
-
+import Dishes from "./components/Dishes.js";
 
 
 const router = createBrowserRouter([
@@ -18,7 +17,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/dishes/:dishType",
-    element: <BeefDishes/>
+    element: <Dishes />
   }
 ])
 

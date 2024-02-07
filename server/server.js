@@ -15,7 +15,6 @@ app.use(express.json());
 const PORT = 5000;
 
 
-
 async function connectToMongoose() {
     await mongoose.connect(process.env.URL);
     console.log('The server is connected.');
@@ -54,11 +53,7 @@ app.get("/api/vegetarian", async (req, res) => {
     res.json(vegetarianDishes)
 })
 
-
-
-
 app.use(express.static(path.join(__dirname, '../client')));
-
 
 app.listen(PORT, () => {
     console.log(`This server is running on PORT ${PORT}`);

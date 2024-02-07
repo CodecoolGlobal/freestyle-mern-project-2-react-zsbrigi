@@ -1,12 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from "react"
 import IngredientsTable from "./IngredientsTable";
-import { useParams } from "react-router-dom";
-import Header from "../mainPage Components/Header.js";
+import Header from "../mainPage Components/Header";
 
-function Dishes() {
-	const [beefDishes, setBeefdishes] = useState([]);
-	let { dishType } = useParams();
-	console.log(dishType);
+function VegetarianDishes() {
+	const [vegetarianDishes, setVegetarianDishes] = useState([])
+
 
 	useEffect(() => {
 		async function fetchdata(url) {
@@ -14,19 +12,19 @@ function Dishes() {
 				const response = await fetch(url)
 				const data = await response.json()
 				console.log(data)
-				setBeefdishes(data)
+				setVegetarianDishes(data)
 			} catch (error) {
 				console.error(error)
 			}
 		}
-		fetchdata(`/api/${dishType}`)
-	}, [dishType])
+		fetchdata("/api/vegetarianDishes")
+	}, [])
 
 	return (
 		<>
 			<Header></Header>
 			<div className="recipeList">
-				{beefDishes.map((dish) => (
+				{vegetarianDishes.map((dish) => (
 					<div className="dish" key={dish._id}>
 						<h2>{dish.mealName}</h2>
 						<img src={`/src/Assets/${dish.mealName.replaceAll(" ", "")}.jpg`} alt={dish.mealName}></img>
@@ -43,4 +41,4 @@ function Dishes() {
 
 }
 
-export default Dishes
+export default VegetarianDishes
