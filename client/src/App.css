@@ -41,6 +41,10 @@ body {
   overflow: hidden;
 }
 
+.recipeList{
+  text-align: center;
+}
+
 .slick-dots {
   background-color: rgb(202, 238, 172, 1);
 }

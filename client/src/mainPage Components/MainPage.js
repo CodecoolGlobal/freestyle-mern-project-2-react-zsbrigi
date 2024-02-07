@@ -3,6 +3,7 @@ import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import Header from './Header.js';
+import IngredientsTable from '../components/IngredientsTable.js';
 
 function MaingPage() {
 	const [recipes, setRecipes] = useState([]);
@@ -38,22 +39,7 @@ function MaingPage() {
 					<div key={recipe._id}>
 						<h1>{recipe.mealName}</h1>
 						<img src={`/src/Assets/${recipe.mealName.replaceAll(' ', '')}.jpg`} alt={recipe.mealName.replaceAll(' ', '')} />
-						<table className='ingredients-table'>
-							<thead>
-								<tr>
-									<th>Ingredients</th>
-									<th>Amount</th>
-								</tr>
-							</thead>
-							<tbody>
-								{recipe.ingredients.map(ingredient => (
-									<tr key={ingredient.name}>
-										<td>{ingredient.name}</td>
-										<td>{ingredient.amount}</td>
-									</tr>
-								))}
-							</tbody>
-						</table>
+						<IngredientsTable recipe={recipe}></IngredientsTable>
 						<p>{recipe.description}</p>
 						<p>{recipe.time}</p>
 					</div>
