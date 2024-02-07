@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import IngredientsTable from "./IngredientsTable";
-import Header from "../mainPage Components/Header";
+import { useParams } from "react-router-dom";
+import Header from "../mainPage Components/Header.js";
 
-function BeefDishes() {
-	const [beefDishes, setBeefdishes] = useState([])
-
+function Dishes() {
+	const [beefDishes, setBeefdishes] = useState([]);
+	let { dishType } = useParams();
+	console.log(dishType);
 
 	useEffect(() => {
 		async function fetchdata(url) {
@@ -17,8 +19,8 @@ function BeefDishes() {
 				console.error(error)
 			}
 		}
-		fetchdata("/api/recipes")
-	}, [])
+		fetchdata(`/api/${dishType}`)
+	}, [dishType])
 
 	return (
 		<>
@@ -41,4 +43,4 @@ function BeefDishes() {
 
 }
 
-export default BeefDishes
+export default Dishes
