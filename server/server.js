@@ -33,29 +33,29 @@ app.get("/api/recipes", async (req, res) => {
 });
 
 
-app.get("/api/beefDishes", async (req,res) => {   
-        const beefDishes = await BeefDish.find()
-        res.json(beefDishes)  
+app.get("/api/beefDishes", async (req, res) => {
+    const beefDishes = await BeefDish.find()
+    res.json(beefDishes)
 })
 
-app.get("/api/chickenDishes", async (req,res) => {   
+app.get("/api/chickenDishes", async (req, res) => {
     const chickenDishes = await ChickenDish.find()
-    res.json(chickenDishes)  
+    res.json(chickenDishes)
 })
 
-app.get("/api/pastaDishes", async (req,res) => {   
+app.get("/api/pastaDishes", async (req, res) => {
     const pastaDishes = await PastaDish.find()
-    res.json(pastaDishes)  
+    res.json(pastaDishes)
 })
 
-app.get("/api/dessertDishes", async (req,res) => {   
+app.get("/api/dessertDishes", async (req, res) => {
     const dessertDish = await DessertDish.find()
-    res.json(dessertDish)  
+    res.json(dessertDish)
 })
 
-app.get("/api/vegetarianDishes", async (req,res) => {   
+app.get("/api/vegetarianDishes", async (req, res) => {
     const vegetarianDishes = await VegetarianDish.find()
-    res.json(vegetarianDishes)  
+    res.json(vegetarianDishes)
 })
 
 
