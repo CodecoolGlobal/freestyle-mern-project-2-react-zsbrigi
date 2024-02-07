@@ -5,51 +5,52 @@ import Header from "../mainPage Components/Header.js";
 import HandleSaveButton from "./SaveButton.js";
 
 function Dishes() {
-  const [beefDishes, setBeefdishes] = useState([]);
-  let { dishType } = useParams();
-  console.log(dishType);
+	const [recipes, setRecipes] = useState([]);
+	let { dishType } = useParams();
+	console.log(dishType);
 
-  useEffect(() => {
-    async function fetchdata(url) {
-      try {
-        const response = await fetch(url);
-        const data = await response.json();
-        console.log(data);
-        setBeefdishes(data);
-      } catch (error) {
-        console.error(error);
-      }
-    }
-    fetchdata(`/api/${dishType}`);
-  }, [dishType]);
+	useEffect(() => {
+		async function fetchdata(url) {
+			try {
+				const response = await fetch(url)
+				const data = await response.json()
+				console.log(data)
+				setRecipes(data)
+			} catch (error) {
+				console.error(error)
+			}
+		}
+		fetchdata(`/api/${dishType}`)
+	}, [dishType])
 
-  return (
-    <>
-      <Header></Header>
-      <div className="recipeList">
-        {beefDishes.map((dish) => (
-          <div className="dish" key={dish._id}>
-            <h2>{dish.mealName}</h2>
-            <img
-              src={`/src/Assets/${dish.mealName.replaceAll(" ", "")}.jpg`}
-              alt={dish.mealName}
-            ></img>
-            <p>description: {dish.description}</p>
-            <p>time: {dish.time}</p>
-            <p>Ingredients:</p>
-            <IngredientsTable recipe={dish}></IngredientsTable>
-            <button
-              onClick={() => {
-                HandleSaveButton(dish, beefDishes)}
-              }
-            >
-              Save
-            </button>
-          </div>
-        ))}
-      </div>
-    </>
-  );
+	return (
+		<>
+			<Header></Header>
+			<div className="recipeList">
+				{recipes.map((dish) => (
+					<div className="dish" key={dish._id}>
+						<h2>{dish.mealName}</h2>
+						<img
+							src={`/src/Assets/${dish.mealName.replaceAll(" ", "")}.jpg`}
+							alt={dish.mealName}
+						></img>
+						<p>description: {dish.description}</p>
+						<p>time: {dish.time}</p>
+						<p>Ingredients:</p>
+						<IngredientsTable recipe={dish}></IngredientsTable>
+						<button
+							onClick={() => {
+								HandleSaveButton(dish, recipes)
+							}
+							}
+						>
+							Save
+						</button>
+					</div>
+				))}
+			</div>
+		</>
+	);
 }
 
 export default Dishes;

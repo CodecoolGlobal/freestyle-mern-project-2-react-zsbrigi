@@ -1,8 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-//import App from './App';
-import './App.css';
+import './styles.css';
 import reportWebVitals from './reportWebVitals';
 import MaingPage from './mainPage Components/MainPage.js';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
@@ -12,7 +11,7 @@ import Dishes from "./components/Dishes.js";
 
 const router = createBrowserRouter([
   {
-    path: "/mainpage",
+    path: "/",
     element: <MaingPage></MaingPage>
   },
   {
