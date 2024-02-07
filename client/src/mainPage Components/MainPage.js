@@ -33,7 +33,7 @@ function MaingPage() {
 	};
 
 	return (
-		<div className="App">
+		<div className="main">
 			<Header></Header>
 			<Slider {...sliderSettings}>
 				{recipes.map(recipe => (
