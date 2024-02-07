@@ -2,6 +2,7 @@ import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import Recipe from "./model/Recipe.js";
+
 dotenv.config();
 import path from "path";
 import url from "url";
@@ -23,6 +24,56 @@ connectToMongoose();
 app.get("/api/recipes", async (req, res) => {
   const recipes = await Recipe.find();
   res.json(recipes);
+});
+
+app.get("/api/beef", async (req, res) => {
+  const beefDishes = await Recipe.find({ type: "beef" });
+  res.json(beefDishes);
+});
+
+app.get("/api/chicken", async (req, res) => {
+  const chickenDishes = await Recipe.find({ type: "chicken" });
+  res.json(chickenDishes);
+});
+
+app.get("/api/pasta", async (req, res) => {
+  const pastaDishes = await Recipe.find({ type: "pasta" });
+  res.json(pastaDishes);
+});
+
+app.get("/api/dessert", async (req, res) => {
+  const dessertDish = await Recipe.find({ type: "dessert" });
+  res.json(dessertDish);
+});
+
+app.get("/api/vegetarian", async (req, res) => {
+  const vegetarianDishes = await Recipe.find({ type: "vegetarian" });
+  res.json(vegetarianDishes);
+});
+
+app.get("/api/beef", async (req, res) => {
+  const beefDishes = await Recipe.find({ type: "beef" });
+  res.json(beefDishes);
+});
+
+app.get("/api/chicken", async (req, res) => {
+  const chickenDishes = await Recipe.find({ type: "chicken" });
+  res.json(chickenDishes);
+});
+
+app.get("/api/pasta", async (req, res) => {
+  const pastaDishes = await Recipe.find({ type: "pasta" });
+  res.json(pastaDishes);
+});
+
+app.get("/api/dessert", async (req, res) => {
+  const dessertDish = await Recipe.find({ type: "dessert" });
+  res.json(dessertDish);
+});
+
+app.get("/api/vegetarian", async (req, res) => {
+  const vegetarianDishes = await Recipe.find({ type: "vegetarian" });
+  res.json(vegetarianDishes);
 });
 
 app.get("/user/recipes", async (req, res) => {

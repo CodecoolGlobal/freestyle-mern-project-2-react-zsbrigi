@@ -1,22 +1,34 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import reportWebVitals from './reportWebVitals';
-import UserProfile from './userComponents/UserProfile';
-import { RouterProvider, createBrowserRouter } from "react-router-dom"
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";
+import App from "./App";
+import reportWebVitals from "./reportWebVitals";
+import UserProfile from "./userComponents/UserProfile";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
+
+import MaingPage from "./mainPage Components/MainPage.js";
+
+import Dishes from "./components/Dishes.js";
 
 const router = createBrowserRouter([
   {
-    path: '/user/recipes',
-    element: <UserProfile/>
+    path: "/user/recipes",
+    element: <UserProfile />,
   },
-  {}
-])
+  {
+    path: "/mainpage",
+    element: <MaingPage></MaingPage>,
+  },
+  {
+    path: "/dishes/:dishType",
+    element: <Dishes />,
+  },
+]);
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <RouterProvider router={router}/>
+    <RouterProvider router={router}></RouterProvider>
   </React.StrictMode>
 );
 
