@@ -1,13 +1,28 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import App from './App';
+//import App from './App';
+import './App.css';
 import reportWebVitals from './reportWebVitals';
+import MaingPage from './mainPage Components/MainPage.js';
+import {RouterProvider, createBrowserRouter} from 'react-router-dom';
+
+
+const router = createBrowserRouter([
+  {
+    path: "/mainpage",
+    element: <MaingPage></MaingPage>
+  }
+/*   {
+    path: "/chicken";
+    element: 
+  } */
+])
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+    <RouterProvider router={router}></RouterProvider>
   </React.StrictMode>
 );
 
