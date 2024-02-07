@@ -1,10 +1,12 @@
 import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
-
+import ChickenDish from "./model/ChickenDish.js";
 import BeefDish from "./model/BeefDishes.js";
-
 import Recipe from './model/Recipe.js';
+import DessertDish from "./model/DessertDish.js";
+import PastaDish from "./model/PastaDish.js";
+import VegetarianDish from "./model/VegetarianDish.js"
 
 dotenv.config();
 import path from "path";
@@ -31,13 +33,30 @@ app.get("/api/recipes", async (req, res) => {
 });
 
 
-app.get("/api/beefDishes", async (req,res) => {
-    
+app.get("/api/beefDishes", async (req,res) => {   
         const beefDishes = await BeefDish.find()
-        res.json(beefDishes)
-   
+        res.json(beefDishes)  
 })
 
+app.get("/api/chickenDishes", async (req,res) => {   
+    const chickenDishes = await ChickenDish.find()
+    res.json(chickenDishes)  
+})
+
+app.get("/api/pastaDishes", async (req,res) => {   
+    const pastaDishes = await PastaDish.find()
+    res.json(pastaDishes)  
+})
+
+app.get("/api/dessertDishes", async (req,res) => {   
+    const dessertDish = await DessertDish.find()
+    res.json(dessertDish)  
+})
+
+app.get("/api/vegetarianDishes", async (req,res) => {   
+    const vegetarianDishes = await VegetarianDish.find()
+    res.json(vegetarianDishes)  
+})
 
 
 

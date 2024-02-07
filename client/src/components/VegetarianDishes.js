@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react"
 
-function BeefDishes() {
-    const [beefDishes, setBeefdishes] = useState([])
-   
+function VegetarianDishes() {
+    const [vegetarianDishes, setVegetarianDishes] = useState([])
+    
 
     useEffect(() => {
         async function fetchdata (url) {
@@ -10,17 +10,17 @@ function BeefDishes() {
             const response = await fetch(url)
             const data = await response.json()
             console.log(data)
-            setBeefdishes(data)
+            setVegetarianDishes(data)
         } catch (error) {
             console.error(error)
         }
     }
-    fetchdata("/api/beefDishes")
+    fetchdata("/api/vegetarianDishes")
     }, [])
 
     return (
         <div>
-            {beefDishes.map((dish) => (
+            {vegetarianDishes.map((dish) => (
                 <div className="dish" key={dish._id}>
                 <h2>{dish.mealName}</h2>
                 <img src={`/src/Assets/${dish.mealName.replaceAll(" ", "")}.jpg`} alt={dish.mealName}></img>
@@ -41,4 +41,4 @@ function BeefDishes() {
     
 }
 
-export default BeefDishes
+export default VegetarianDishes
