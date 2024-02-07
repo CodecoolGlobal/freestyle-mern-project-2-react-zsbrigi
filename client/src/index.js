@@ -6,11 +6,9 @@ import './App.css';
 import reportWebVitals from './reportWebVitals';
 import MaingPage from './mainPage Components/MainPage.js';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
-import ChickenDishes from "./components/ChickenDishes.js";
-import BeefDishes from "./components/BeefDishes.js";
-import DessertDishes from "./components/DessertDishes.js";
-import PastaDishes from "./components/PastaDishes.js";
-import VegetarianDishes from "./components/VegetarianDishes.js";
+
+import BeefDishes from "./components/Dishes.js";
+
 
 
 const router = createBrowserRouter([
@@ -19,24 +17,8 @@ const router = createBrowserRouter([
     element: <MaingPage></MaingPage>
   },
   {
-    path: "/chicken",
-    element: <ChickenDishes></ChickenDishes>
-  },
-  {
-    path: "/beef",
-    element: <BeefDishes></BeefDishes>
-  },
-  {
-    path: "/pasta",
-    element: <PastaDishes></PastaDishes>
-  },
-  {
-    path: "/vegetarian",
-    element: <VegetarianDishes></VegetarianDishes>
-  },
-  {
-    path: "/dessert",
-    element: <DessertDishes></DessertDishes>
+    path: "/dishes/:dishType",
+    element: <BeefDishes/>
   }
 ])
 
