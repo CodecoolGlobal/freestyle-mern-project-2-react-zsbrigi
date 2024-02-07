@@ -28,7 +28,7 @@ function Dishes() {
 			<div className="recipeList">
 				{beefDishes.map((dish) => (
 					<div className="dish" key={dish._id}>
-						<h2>{dish.mealName}</h2>
+						<h1>{dish.mealName}</h1>
 						<img src={`/src/Assets/${dish.mealName.replaceAll(" ", "")}.jpg`} alt={dish.mealName}></img>
 						<p>description: {dish.description}</p>
 						<p>time: {dish.time}</p>

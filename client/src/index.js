@@ -12,7 +12,7 @@ import Dishes from "./components/Dishes.js";
 
 const router = createBrowserRouter([
   {
-    path: "/mainpage",
+    path: "/",
     element: <MaingPage></MaingPage>
   },
   {
