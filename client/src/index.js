@@ -15,7 +15,7 @@ import VegetarianDishes from "./components/VegetarianDishes.js";
 
 const router = createBrowserRouter([
   {
-    path: "/mainpage",
+    path: "/",
     element: <MaingPage></MaingPage>
   },
   {
