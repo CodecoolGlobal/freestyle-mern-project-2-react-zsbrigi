@@ -82,15 +82,15 @@ function CommentSection(recipeIds) {
                 ))}
             </div>
             <form onSubmit={handleSubmit}>
-                <textarea
+                <textarea rows="10" cols="70"
                     className="commentArea"
                     value={newComment}
                     onChange={handleChange}
                     placeholder="add a comment"
                     required>
-                    
+
                 </textarea>
-                <button className="commentButton" type="submit">add comment</button>
+                <button className="commentButton" type="submit">Add comment</button>
             </form>
         </div>
     )
