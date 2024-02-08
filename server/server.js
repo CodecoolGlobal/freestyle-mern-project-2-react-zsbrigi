@@ -1,15 +1,17 @@
 import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
-import Recipe from "./model/Recipe.js";
+import Recipe from './model/Recipe.js';
+import Comment from "./model/Comment.js";
 import Favorite from "./model/Favorite.js";
+import UserRecipe from "./model/UserRecipe.js";
+
 
 dotenv.config();
 import path from "path";
 import url from "url";
 const __filename = url.fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-
 
 const app = express();
 app.use(express.json());
@@ -20,7 +22,6 @@ app.use(express.static(path.join(__dirname, "../client")));
 async function connectToMongoose() {
   await mongoose.connect(process.env.URL);
   console.log("The server is connected.");
-  console.log(__dirname);
 }
 connectToMongoose();
 
@@ -29,35 +30,122 @@ app.get("/api/recipes", async (req, res) => {
   res.json(recipes);
 });
 
-app.get("/api/beef", async (req, res) => {
-  const beefDishes = await Recipe.find({ type: "beef" });
-  res.json(beefDishes);
-});
-
-app.get("/api/chicken", async (req, res) => {
-  const chickenDishes = await Recipe.find({ type: "chicken" });
-  res.json(chickenDishes);
-});
-
-app.get("/api/pasta", async (req, res) => {
-  const pastaDishes = await Recipe.find({ type: "pasta" });
-  res.json(pastaDishes);
-});
-
-app.get("/api/dessert", async (req, res) => {
-  const dessertDish = await Recipe.find({ type: "dessert" });
-  res.json(dessertDish);
-});
-
-app.get("/api/vegetarian", async (req, res) => {
-  const vegetarianDishes = await Recipe.find({ type: "vegetarian" });
-  res.json(vegetarianDishes);
-});
+app.get("/api/comments", async (req, res) => {
+  const comments = await Comment.find();
+  res.json(comments);
+})
 
 app.get("/api/favorites", async (req, res) => {
   const favorties = await Favorite.find({});
   res.json(favorties);
 });
+
+app.get("/api/:type", async (req, res) => {
+  const dishType = req.params.type;
+  const dishes = await Recipe.find({ type: dishType });
+  res.json(dishes);
+});
+
+app.post("/api/comments", async (req, res) => {
+  try {
+    const comment = req.body.newComment;
+    const recipeId = req.body.recipeIds
+    const createdAt = Date.now();
+    const newComment = new Comment({
+      comment,
+      createdAt,
+      recipe: recipeId.recipeIds
+
+    })
+    const savedComment = await newComment.save()
+    res.json(savedComment)
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({ success: false })
+  }
+})
+
+app.delete("/api/comments/:id", async (req, res) => {
+  const commentId = req.params.id
+  try {
+    const deletedComment = await Comment.findByIdAndDelete(commentId)
+    res.json({ status: "deleted" })
+  } catch (error) {
+    console.error(error)
+  }
+})
+
+
+
+app.get("/api/recipes/:id", async (req, res) => {
+  const recipeId = req.params.id;
+  const recipe = await UserRecipe.find({ _id: recipeId });
+  res.send(recipe);
+});
+
+// app.patch('/user/recipes/:id', async (req, res) => {
+//   const recipeId = req.params.id;
+//   const editedRecipe = await UserRecipe.findById(recipeId)
+//   editedRecipe.mealName = req.body.mealName || editedRecipe.mealName;
+//   editedRecipe.img = req.body.img || editedRecipe.img;
+//   editedRecipe.ingredients = req.body.ingredients || editedRecipe.ingredients;
+//   editedRecipe.description = req.body.description || editedRecipe.description;
+//   editedRecipe.time = req.body.time || editedRecipe.time;
+//   await editedRecipe.save();
+//   res.send(editedRecipe);
+// })
+
+// app.patch("/user/recipes/:id", async (req, res) => {
+//   const recipeId = req.params.id;
+//   if (recipeId !== -1) {
+//     // const updatedRecipe = {
+//     //   mealName: recipe.mealName,
+//     //   img: recipe.img,
+//     //   ingredients: recipe.ingredients,
+//     //   description: recipe.description,
+//     //   time: recipe.time,
+//     // };
+//     const newUpdatedRecipe = await UserRecipe.updateOne(
+//       { _id: recipeId },
+//       { $set: req.body }, { new: true }
+//     );
+//     res.send(newUpdatedRecipe);
+//   }
+// });
+
+app.patch('/api/recipes/:id', async (req, res) => {
+  const recipeId = req.params.id;
+  const updatedRecipe = await UserRecipe.findByIdAndUpdate(recipeId, req.body, { new: true })
+  res.send(updatedRecipe);
+})
+
+app.post("/api/recipes", async (req, res) => {
+  const mealName = req.body.mealName;
+  const img = req.body.img;
+  const ingredients = req.body.ingredients;
+  const description = req.body.description;
+  const time = req.body.time;
+  const userRecipe = new UserRecipe({
+    mealName,
+    img,
+    ingredients,
+    description,
+    time,
+  });
+  const newRecipe = await userRecipe.save();
+  res.json(newRecipe);
+});
+
+app.delete("/api/recipes/:id", async (req, res) => {
+  const recipeId = req.params.id;
+  if (recipeId !== -1) {
+    await UserRecipe.deleteOne({ _id: recipeId });
+    console.log(recipeId);
+    return res.json({ id: recipeId });
+  }
+});
+
+
 
 app.post("/api/favorites", async (req, res) => {
   const mealName = req.body.mealName;
@@ -103,3 +191,7 @@ app.delete('/api/favorites/:name', async (req, res) => {
 app.listen(PORT, () => {
   console.log(`This server is running on PORT ${PORT}`);
 });
+
+
+
+

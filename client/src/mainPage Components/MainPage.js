@@ -49,7 +49,7 @@ function MaingPage() {
 				))
 				}
 			</Slider >
-		</div >
+		</div>
 	);
 }
 
