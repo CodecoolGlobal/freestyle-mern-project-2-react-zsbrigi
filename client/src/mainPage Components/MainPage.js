@@ -29,10 +29,11 @@ function MaingPage() {
 		slidesToScroll: 1,
 		autoplay: true,
 		autoplaySpeed: 5000,
+		//pauseOnHover: false
 	};
 
 	return (
-		<div className="App">
+		<div className="main">
 			<Header></Header>
 			<Slider {...sliderSettings}>
 				{recipes.map(recipe => (

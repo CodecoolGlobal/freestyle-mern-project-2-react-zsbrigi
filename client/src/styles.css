@@ -1,7 +1,3 @@
-.App {
-  text-align: center;
-}
-
 ul {
   list-style-position: inside;
   padding-left: 0;
@@ -26,11 +22,12 @@ img {
   width: 200px;
   margin: auto;
   border-radius: 30px;
+  box-shadow: 0 12px 15px rgba(0, 0, 0, 0.36);
 }
 
-a{
+a {
   text-decoration: none;
-  color:#1a1a1a;
+  color: #1a1a1a;
 }
 
 body {
@@ -40,13 +37,13 @@ body {
   background: linear-gradient(192deg, rgba(27, 251, 255, 1) 23%, rgba(202, 238, 172, 1) 63%);
 }
 
-.App {
+.main {
   text-align: center;
   height: 100vh;
   overflow: hidden;
 }
 
-.recipeList{
+.recipeList {
   text-align: center;
 }
 
@@ -81,6 +78,10 @@ body {
   padding: 15px;
 }
 
+.recipeList {
+  margin-top: 83px;
+}
+
 .header {
   text-shadow: none;
   display: flex;
@@ -96,6 +97,7 @@ body {
   z-index: 1000;
   background-color: #0cc2b6;
 }
+
 
 
 .commentButton {
@@ -152,4 +154,8 @@ body {
   max-height: 20vh;
   overflow: auto;
   border-radius: 5%;
+}
+.navbar a.active {
+  color: rgb(68, 0, 255);
+
 }
