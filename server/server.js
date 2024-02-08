@@ -54,34 +54,50 @@ app.get("/api/vegetarian", async (req, res) => {
   res.json(vegetarianDishes);
 });
 
-app.post("/api/favorites", (req, res) => {
-  console.log("request: ", req.body);
+app.get("/api/favorites", async (req, res) => {
+  const favorties = await Favorite.find({});
+  res.json(favorties);
+});
 
+app.post("/api/favorites", async (req, res) => {
   const mealName = req.body.mealName;
   const ingredients = req.body.ingredients;
   const description = req.body.description;
   const time = req.body.time;
   const type = req.body.type;
 
-  const favorite = new Favorite({
-    mealName,
-    ingredients,
-    description,
-    time,
-    type,
-  });
-
-  favorite
-    .save()
-    .then((favorite) => res.json(favorite))
-    .catch((err) => {
-      res.status(400).json({ success: false });
+  try {
+    const favorite = new Favorite({
+      mealName,
+      ingredients,
+      description,
+      time,
+      type,
     });
+
+    /* favorite
+      .save()
+      .then((favorite) => res.json(favorite))
+      .catch((err) => {
+        res.status(400).json({ success: false });
+      }); */
+
+    const savedToFavorites = await favorite.save();
+    res.json(savedToFavorites);
+  } catch (error) {
+    throw new Error(error);
+  }
 });
 
-app.delete('/api/favorites', (req, res) => {
-    const favoriteDishId = req.params._id;
-    
+app.delete('/api/favorites/:name', async (req, res) => {
+  const favoriteName = req.params.name;
+  try {
+    const deletedFavorite = await Favorite.deleteOne({ mealName: favoriteName });
+    res.json(deletedFavorite);
+  } catch (error) {
+    throw new Error(error);
+  }
+
 })
 
 app.listen(PORT, () => {
