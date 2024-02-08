@@ -11,7 +11,9 @@ dotenv.config();
 import path from "path";
 import url from "url";
 const __filename = url.fileURLToPath(import.meta.url);
+console.log(import.meta.url);
 const __dirname = path.dirname(__filename);
+console.log(__dirname);
 
 const app = express();
 app.use(express.json());
@@ -39,12 +41,17 @@ app.get("/api/favorites", async (req, res) => {
   const favorties = await Favorite.find({});
   res.json(favorties);
 });
-
+app.get("/api/user/recipes", async (req, res) => {
+  const recipes = await UserRecipe.find();
+  res.json(recipes);
+});
 app.get("/api/:type", async (req, res) => {
   const dishType = req.params.type;
   const dishes = await Recipe.find({ type: dishType });
   res.json(dishes);
 });
+
+
 
 app.post("/api/comments", async (req, res) => {
   try {
@@ -77,7 +84,7 @@ app.delete("/api/comments/:id", async (req, res) => {
 
 
 
-app.get("/api/recipes/:id", async (req, res) => {
+app.get("/api/user/recipes/:id", async (req, res) => {
   const recipeId = req.params.id;
   const recipe = await UserRecipe.find({ _id: recipeId });
   res.send(recipe);
@@ -112,14 +119,13 @@ app.get("/api/recipes/:id", async (req, res) => {
 //     res.send(newUpdatedRecipe);
 //   }
 // });
-
-app.patch('/api/recipes/:id', async (req, res) => {
+app.patch('/api/user/recipes/:id', async (req, res) => {
   const recipeId = req.params.id;
   const updatedRecipe = await UserRecipe.findByIdAndUpdate(recipeId, req.body, { new: true })
   res.send(updatedRecipe);
 })
 
-app.post("/api/recipes", async (req, res) => {
+app.post("/api/user/recipes", async (req, res) => {
   const mealName = req.body.mealName;
   const img = req.body.img;
   const ingredients = req.body.ingredients;
@@ -136,7 +142,7 @@ app.post("/api/recipes", async (req, res) => {
   res.json(newRecipe);
 });
 
-app.delete("/api/recipes/:id", async (req, res) => {
+app.delete("/api/user/recipes/:id", async (req, res) => {
   const recipeId = req.params.id;
   if (recipeId !== -1) {
     await UserRecipe.deleteOne({ _id: recipeId });
@@ -146,8 +152,9 @@ app.delete("/api/recipes/:id", async (req, res) => {
 });
 
 
-
 app.post("/api/favorites", async (req, res) => {
+  console.log("request: ", req.body);
+
   const mealName = req.body.mealName;
   const ingredients = req.body.ingredients;
   const description = req.body.description;
