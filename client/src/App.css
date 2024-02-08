@@ -98,6 +98,20 @@ body {
 }
 
 
+input[type="radio"] {
+  display: none;
+}
+
+.star {
+  cursor: pointer;
+  transition: color 200ms;
+}
+
+.averageRating{
+  font-family: monospace;
+}
+
+
 .commentButton {
   background-color: #EA4C89;
   border-radius: 8px;
@@ -153,4 +167,3 @@ body {
   overflow: auto;
   border-radius: 5%;
 }
-

@@ -7,6 +7,8 @@ const recipeSchema = new Schema({
     description: String,
     time: String,
     type: String,
+    ratings: [Number],
+    userVotes: Number
     comments: [{ type: Schema.Types.ObjectId, ref: 'Comment' }]
 })
 
