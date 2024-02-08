@@ -80,7 +80,7 @@ export default function HandleRatingStar({ ingredient, onSetRatings }) {
           </>
         );
       })}
-      <button onClick={() => handleRating()}>Save Rating</button>
+      <button className="saveRatingButton" onClick={() => handleRating()}>Save Rating</button>
     </>
   );
 }

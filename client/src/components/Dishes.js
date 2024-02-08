@@ -10,7 +10,7 @@ import GetSumOfRatings from "./RatingCalculator.js";
 function Dishes() {
 	const [recipes, setRecipes] = useState([]);
 	const [favorites, setFavorites] = useState([]);
-  const [rating, setRating] = useState([]);
+	const [rating, setRating] = useState([]);
 	let { dishType } = useParams();
 
 	async function fetchFavorites() {
@@ -42,10 +42,10 @@ function Dishes() {
 		setFavorites((prevRecipes) => prevRecipes.filter(favRecipe => favRecipe._id !== name));
 		fetchFavorites();
 	}
-  
-function handleSetState(responseData) {
-setRating((prev) => [...prev, responseData])
-}
+
+	function handleSetState(responseData) {
+		setRating((prev) => [...prev, responseData])
+	}
 
 	return (
 		<>
@@ -61,21 +61,21 @@ setRating((prev) => [...prev, responseData])
 						<p><b>Description:</b> {dish.description}</p>
 						<p><b>Time:</b> {dish.time}</p>
 						<IngredientsTable recipe={dish}></IngredientsTable>
-            <HandleRatingStar 
-            ingredient={dish}
-            onSetRatings={handleSetState} />
-            {dish.ratings && dish.ratings.length > 0 ? (
-              <div className="averageRating">
-                <h3>The average rating is: < GetSumOfRatings
-                dish={dish}
-                /> </h3>
-              </div>
-            ) : (
-              <div className="averageRating">
-                <h3>No one has rated it yet</h3>
-              </div>
-            )}
 						<AddToFavoriteButton recipe={dish} favorites={favorites} onDeleteState={deleteState} onAddState={handleAddState}></AddToFavoriteButton>
+						<HandleRatingStar
+							ingredient={dish}
+							onSetRatings={handleSetState} />
+						{dish.ratings && dish.ratings.length > 0 ? (
+							<div className="averageRating">
+								<h3>The average rating is: < GetSumOfRatings
+									dish={dish}
+								/> </h3>
+							</div>
+						) : (
+							<div className="averageRating">
+								<h3>No one has rated it yet</h3>
+							</div>
+						)}
 						<CommentSection recipeIds={dish._id}></CommentSection>
 					</div>
 				))}

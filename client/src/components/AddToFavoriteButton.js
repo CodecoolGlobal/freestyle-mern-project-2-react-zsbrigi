@@ -46,7 +46,7 @@ function AddToFavoriteButton({ recipe, onDeleteState, onAddState, favorites }) {
 
 	return (
 		<>
-			<button onClick={() => handleUpdateButton(recipe)}>{!isAddedToFavorite(recipe.mealName) ? "Add To Favorites" : "Remove From Favorites"}</button>
+			<button className="addToFavorites" onClick={() => handleUpdateButton(recipe)}>{!isAddedToFavorite(recipe.mealName) ? "Add To Favorites" : "Remove From Favorites"}</button>
 		</>
 	)
 }

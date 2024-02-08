@@ -8,7 +8,7 @@ const recipeSchema = new Schema({
     time: String,
     type: String,
     ratings: [Number],
-    userVotes: Number
+    userVotes: Number,
     comments: [{ type: Schema.Types.ObjectId, ref: 'Comment' }]
 })
 
