@@ -9,6 +9,7 @@ const recipeSchema = new Schema({
     type: String,
     ratings: [Number],
     userVotes: Number
+    comments: [{ type: Schema.Types.ObjectId, ref: 'Comment' }]
 })
 
 export default model('Recipe', recipeSchema);

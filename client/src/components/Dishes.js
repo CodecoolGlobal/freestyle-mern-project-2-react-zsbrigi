@@ -2,49 +2,65 @@ import { useEffect, useState } from "react";
 import IngredientsTable from "./IngredientsTable";
 import { useParams } from "react-router-dom";
 import Header from "../mainPage Components/Header.js";
-import HandleSaveButton from "./SaveButton.js";
+import CommentSection from "./Comments.js";
+import AddToFavoriteButton from "./AddToFavoriteButton.js";
 import HandleRatingStar from "./RatingStar.js";
 import GetSumOfRatings from "./RatingCalculator.js";
 
 function Dishes() {
-  const [beefDishes, setBeefdishes] = useState([]);
+	const [recipes, setRecipes] = useState([]);
+	const [favorites, setFavorites] = useState([]);
   const [rating, setRating] = useState([]);
-  let { dishType } = useParams();
-  console.log(dishType);
+	let { dishType } = useParams();
 
-  useEffect(() => {
-    async function fetchdata(url) {
-      try {
-        const response = await fetch(url);
-        const data = await response.json();
-        console.log(data);
-        setBeefdishes(data);
-      } catch (error) {
-        console.error(error);
-      }
-    }
-    fetchdata(`/api/${dishType}`);
-  }, [dishType, rating]);
+	async function fetchFavorites() {
+		const httpResponse = await fetch("/api/favorites");
+		const favoriteRecipes = await httpResponse.json();
+		setFavorites(favoriteRecipes);
+	}
 
+	useEffect(() => {
+		async function fetchdata(url) {
+			try {
+				const response = await fetch(url)
+				const data = await response.json()
+				setRecipes(data)
+			} catch (error) {
+				console.error(error)
+			}
+		}
+		fetchdata(`/api/${dishType}`);
+		fetchFavorites();
+	}, [dishType, rating])
+
+	function handleAddState(newRecipe) {
+		setFavorites((prevRecipes) => [...prevRecipes, newRecipe]);
+		fetchFavorites();
+	}
+
+	function deleteState(name) {
+		setFavorites((prevRecipes) => prevRecipes.filter(favRecipe => favRecipe._id !== name));
+		fetchFavorites();
+	}
+  
 function handleSetState(responseData) {
 setRating((prev) => [...prev, responseData])
 }
 
-  return (
-    <>
-      <Header></Header>
-      <div className="recipeList">
-        {beefDishes.map((dish) => (
-          <div className="dish" key={dish._id}>
-            <h2>{dish.mealName}</h2>
-            <img
-              src={`/src/Assets/${dish.mealName.replaceAll(" ", "")}.jpg`}
-              alt={dish.mealName}
-            ></img>
-            <p>description: {dish.description}</p>
-            <p>time: {dish.time}</p>
-            <p>Ingredients:</p>
-            <IngredientsTable recipe={dish}></IngredientsTable>
+	return (
+		<>
+			<Header></Header>
+			<div className="recipeList">
+				{recipes.map((dish) => (
+					<div className="dish" key={dish._id}>
+						<h2>{dish.mealName}</h2>
+						<img
+							src={`/src/Assets/${dish.mealName.replaceAll(" ", "")}.jpg`}
+							alt={dish.mealName}
+						></img>
+						<p><b>Description:</b> {dish.description}</p>
+						<p><b>Time:</b> {dish.time}</p>
+						<IngredientsTable recipe={dish}></IngredientsTable>
             <HandleRatingStar 
             ingredient={dish}
             onSetRatings={handleSetState} />
@@ -59,18 +75,14 @@ setRating((prev) => [...prev, responseData])
                 <h3>No one has rated it yet</h3>
               </div>
             )}
-            <button
-              onClick={() => {
-                HandleSaveButton(dish, beefDishes);
-              }}
-            >
-              Add to favorites
-            </button>
-          </div>
-        ))}
-      </div>
-    </>
-  );
+						<AddToFavoriteButton recipe={dish} favorites={favorites} onDeleteState={deleteState} onAddState={handleAddState}></AddToFavoriteButton>
+						<CommentSection recipeIds={dish._id}></CommentSection>
+					</div>
+				))}
+			</div >
+		</>
+	);
+
 }
 
 export default Dishes;

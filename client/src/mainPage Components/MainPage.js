@@ -29,24 +29,27 @@ function MaingPage() {
 		slidesToScroll: 1,
 		autoplay: true,
 		autoplaySpeed: 5000,
+		//pauseOnHover: false
 	};
 
 	return (
-		<div className="App">
+		<div className="main">
 			<Header></Header>
 			<Slider {...sliderSettings}>
 				{recipes.map(recipe => (
 					<div key={recipe._id}>
 						<h1>{recipe.mealName}</h1>
-						<img src={`/src/Assets/${recipe.mealName.replaceAll(' ', '')}.jpg`} alt={recipe.mealName.replaceAll(' ', '')} />
-						<IngredientsTable recipe={recipe}></IngredientsTable>
+						<div className='flexBox'>
+							<img src={`/src/Assets/${recipe.mealName.replaceAll(' ', '')}.jpg`} alt={recipe.mealName.replaceAll(' ', '')} />
+							<IngredientsTable recipe={recipe}></IngredientsTable>
+						</div>
 						<p>{recipe.description}</p>
 						<p>{recipe.time}</p>
 					</div>
 				))
 				}
 			</Slider >
-		</div >
+		</div>
 	);
 }
 
