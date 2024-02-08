@@ -46,36 +46,36 @@ app.get("/user/recipes/:id", async (req, res) => {
   res.send(recipe);
 });
 
-// app.patch('/user/recipes/:id', async (req, res) => {
-//     const recipeId = req.params.id;
-//     const editedRecipe = await UserRecipe.findById(recipeId)
-//     editedRecipe.mealName = req.body.mealName || editedRecipe.mealName;
-//     editedRecipe.img = req.body.img || editedRecipe.img;
-//     editedRecipe.ingredients = req.body.ingredients || editedRecipe.ingredients;
-//     editedRecipe.description = req.body.description || editedRecipe.description;
-//     editedRecipe.time = req.body.time || editedRecipe.time;
-//     await editedRecipe.save();
-//     res.send(editedRecipe);
-// })
-
-app.patch("/user/recipes/:id", async (req, res) => {
-  const recipe = req.body;
+app.patch('/user/recipes/:id', async (req, res) => {
   const recipeId = req.params.id;
-  if (recipeId !== -1) {
-    const updatedRecipe = {
-      mealName: recipe.mealName,
-      img: recipe.img,
-      ingredients: recipe.ingredients,
-      description: recipe.description,
-      time: recipe.time,
-    };
-    const newUpdatedRecipe = await UserRecipe.updateOne(
-      { _id: recipeId },
-      { $set: updatedRecipe }
-    );
-    res.send(newUpdatedRecipe);
-  }
-});
+  const editedRecipe = await UserRecipe.findById(recipeId)
+  editedRecipe.mealName = req.body.mealName || editedRecipe.mealName;
+  editedRecipe.img = req.body.img || editedRecipe.img;
+  editedRecipe.ingredients = req.body.ingredients || editedRecipe.ingredients;
+  editedRecipe.description = req.body.description || editedRecipe.description;
+  editedRecipe.time = req.body.time || editedRecipe.time;
+  await editedRecipe.save();
+  res.send(editedRecipe);
+})
+
+// app.patch("/user/recipes/:id", async (req, res) => {
+//   const recipe = req.body;
+//   const recipeId = req.params.id;
+//   if (recipeId !== -1) {
+//     const updatedRecipe = {
+//       mealName: recipe.mealName,
+//       img: recipe.img,
+//       ingredients: recipe.ingredients,
+//       description: recipe.description,
+//       time: recipe.time,
+//     };
+//     const newUpdatedRecipe = await UserRecipe.updateOne(
+//       { _id: recipeId },
+//       { $set: updatedRecipe }
+//     );
+//     res.send(newUpdatedRecipe);
+//   }
+// });
 
 app.post("/user/recipes", async (req, res) => {
   const mealName = req.body.mealName;
