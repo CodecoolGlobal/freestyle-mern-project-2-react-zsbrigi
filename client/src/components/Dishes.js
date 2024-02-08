@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import IngredientsTable from "./IngredientsTable";
 import { useParams } from "react-router-dom";
 import Header from "../mainPage Components/Header.js";
+import CommentSection from "./Comments.js";
 import HandleSaveButton from "./SaveButton.js";
 
 function Dishes() {
@@ -46,6 +47,7 @@ function Dishes() {
 						>
 							Save
 						</button>
+						<CommentSection recipeIds={dish._id}></CommentSection>
 					</div>
 				))}
 			</div>

@@ -1,9 +1,11 @@
 import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
-import Recipe from "./model/Recipe.js";
+import Recipe from './model/Recipe.js';
+import Comment from "./model/Comment.js";
 import Favorite from "./model/Favorite.js";
 import UserRecipe from "./model/UserRecipe.js";
+
 
 dotenv.config();
 import path from "path";
@@ -36,6 +38,42 @@ app.get("/api/:type", async (req, res) => {
   const dishes = await Recipe.find({ type: dishType });
   res.json(dishes);
 });
+
+app.get("/api/comments", async (req, res) => {
+    const comments = await Comment.find();
+    res.json(comments)
+})
+
+app.post("/api/comments", async (req, res) => {
+    try {
+        const comment = req.body.newComment;
+        const recipeId = req.body.recipeIds
+        console.log(recipeId.recipeIds)
+        const createdAt = Date.now();
+        const newComment = new Comment({
+            comment,
+            createdAt,
+            recipe: recipeId.recipeIds
+
+        })
+        const savedComment = await newComment.save()
+        res.json(savedComment)
+    } catch (error) {
+        console.error(error)
+        res.status(500).json({ success: false })
+    }
+})
+
+app.delete("/api/comments/:id", async (req, res) => {
+    const commentId = req.params.id
+    try {
+        const deletedComment = await Comment.findByIdAndDelete(commentId)
+        res.json({status: "deleted"})
+    } catch (error) {
+        console.error(error)
+    }
+})
+
 
 
 app.get("/api/recipes/:id", async (req, res) => {
