@@ -6,7 +6,9 @@ const recipeSchema = new Schema({
     ingredients: Array,
     description: String,
     time: String,
-    type: String
+    type: String,
+    ratings: [Number],
+    userVotes: Number
 })
 
 export default model('Recipe', recipeSchema);
