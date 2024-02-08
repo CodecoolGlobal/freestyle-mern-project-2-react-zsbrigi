@@ -2,17 +2,20 @@ import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import Recipe from "./model/Recipe.js";
+import Favorite from "./model/Favorite.js";
+import UserRecipe from "./model/UserRecipe.js";
 
 dotenv.config();
 import path from "path";
 import url from "url";
-import UserRecipe from "./model/UserRecipe.js";
 const __filename = url.fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const app = express();
 app.use(express.json());
 const PORT = 5000;
+
+app.use(express.static(path.join(__dirname, "../client")));
 
 async function connectToMongoose() {
   await mongoose.connect(process.env.URL);
@@ -30,6 +33,17 @@ app.get("/api/:type", async (req, res) => {
   const dishType = req.params.type;
   const dishes = await Recipe.find({ type: dishType });
   res.json(dishes);
+});
+
+app.get("/user/recipes", async (req, res) => {
+  const recipes = await UserRecipe.find({});
+  res.send(recipes);
+});
+
+app.get("/user/recipes/:id", async (req, res) => {
+  const recipeId = req.params.id;
+  const recipe = await UserRecipe.find({ _id: recipeId });
+  res.send(recipe);
 });
 
 // app.patch('/user/recipes/:id', async (req, res) => {
@@ -89,7 +103,34 @@ app.delete("/user/recipes/:id", async (req, res) => {
   }
 });
 
-app.use(express.static(path.join(__dirname, "../client")));
+app.post("/api/favorites", (req, res) => {
+  console.log("request: ", req.body);
+
+  const mealName = req.body.mealName;
+  const ingredients = req.body.ingredients;
+  const description = req.body.description;
+  const time = req.body.time;
+  const type = req.body.type;
+
+  const favorite = new Favorite({
+    mealName,
+    ingredients,
+    description,
+    time,
+    type,
+  });
+
+  favorite
+    .save()
+    .then((favorite) => res.json(favorite))
+    .catch((err) => {
+      res.status(400).json({ success: false });
+    });
+});
+
+app.delete("/api/favorites", (req, res) => {
+  const favoriteDishId = req.params._id;
+});
 
 app.listen(PORT, () => {
   console.log(`This server is running on PORT ${PORT}`);

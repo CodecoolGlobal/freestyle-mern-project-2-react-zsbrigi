@@ -1,13 +1,11 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
-import App from "./App";
+import './styles.css';
 import reportWebVitals from "./reportWebVitals";
 import UserProfile from "./userComponents/UserProfile";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-
 import MaingPage from "./mainPage Components/MainPage.js";
-
 import Dishes from "./components/Dishes.js";
 
 const router = createBrowserRouter([
@@ -16,7 +14,7 @@ const router = createBrowserRouter([
     element: <UserProfile />,
   },
   {
-    path: "/mainpage",
+    path: "/",
     element: <MaingPage></MaingPage>,
   },
   {
