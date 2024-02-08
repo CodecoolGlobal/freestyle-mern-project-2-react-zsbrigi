@@ -5,11 +5,6 @@ function CommentSection(recipeIds) {
 
     const recipes = Object.values(recipeIds).join("")
 
-    console.log(recipes)
-
-
-
-
     const [comments, setComments] = useState([])
     const [newComment, setNewComment] = useState("")
 
@@ -30,6 +25,7 @@ function CommentSection(recipeIds) {
                 return res.json()
             })
             .then(data => {
+                console.log(data)
                 setComments(data)
             })
     }, [])

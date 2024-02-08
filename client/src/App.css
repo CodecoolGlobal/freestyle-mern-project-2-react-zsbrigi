@@ -1,0 +1,156 @@
+.App {
+  text-align: center;
+}
+
+ul {
+  list-style-position: inside;
+  padding-left: 0;
+}
+
+table {
+  border: 1px solid black;
+  margin: auto;
+  margin-top: 20px;
+}
+
+th {
+  border: 1px solid black;
+}
+
+td {
+  border: 1px solid black;
+  padding: 10px;
+}
+
+img {
+  width: 200px;
+  margin: auto;
+  border-radius: 30px;
+}
+
+a{
+  text-decoration: none;
+  color:#1a1a1a;
+}
+
+body {
+  margin-top: 63px;
+  padding: 0px;
+  background: rgb(27, 251, 255);
+  background: linear-gradient(192deg, rgba(27, 251, 255, 1) 23%, rgba(202, 238, 172, 1) 63%);
+}
+
+.App {
+  text-align: center;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.recipeList{
+  text-align: center;
+}
+
+.slick-dots {
+  background-color: rgb(202, 238, 172, 1);
+}
+
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+}
+
+.navbar li {
+  text-decoration: none;
+  list-style: none;
+  padding: 0 30px;
+  font-size: 18px;
+  font-weight: 600;
+  color: #1a1a1a;
+  transition: 0.3s ease;
+  cursor: pointer;
+}
+
+
+.navbar a:hover {
+  color: #088178;
+}
+
+.header #logo {
+  padding: 15px;
+}
+
+.header {
+  text-shadow: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 20px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.36);
+  height: 23px;
+  margin-bottom: 40px;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+  background-color: #0cc2b6;
+}
+
+
+.commentButton {
+  background-color: #EA4C89;
+  border-radius: 8px;
+  border-style: none;
+  box-sizing: border-box;
+  color: #FFFFFF;
+  cursor: pointer;
+  display: inline-block;
+  font-family: "Haas Grot Text R Web", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  height: 40px;
+  line-height: 20px;
+  list-style: none;
+  margin: 0;
+  outline: none;
+  padding: 10px 16px;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  transition: color 100ms;
+  vertical-align: baseline;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.commentButton:hover,
+.commentButton:focus {
+  background-color: #F082AC;
+}
+
+.commentSection{
+  text-align: center;
+  margin: auto;
+  width: 40%;
+  height: 20%;
+ 
+}
+.comment{
+  position: relative;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+}
+
+.deleteComment{
+  position: absolute;
+  top: 0px;
+  right: 0px;  
+}
+
+.comments{
+  max-height: 20vh;
+  overflow: auto;
+  border-radius: 5%;
+}
+

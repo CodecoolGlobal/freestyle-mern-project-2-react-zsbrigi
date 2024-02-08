@@ -33,22 +33,22 @@ app.get("/api/recipes", async (req, res) => {
   res.json(recipes);
 });
 
-app.get("/api/:type", async (req, res) => {
-  const dishType = req.params.type;
-  const dishes = await Recipe.find({ type: dishType });
-  res.json(dishes);
-});
-
 app.get("/api/comments", async (req, res) => {
     const comments = await Comment.find();
+    console.log("comments")
     res.json(comments)
 })
+
+app.get("/api/:type", async (req, res) => {
+    const dishType = req.params.type;
+    const dishes = await Recipe.find({ type: dishType });
+    res.json(dishes);
+  });
 
 app.post("/api/comments", async (req, res) => {
     try {
         const comment = req.body.newComment;
-        const recipeId = req.body.recipeIds
-        console.log(recipeId.recipeIds)
+        const recipeId = req.body.recipeIds       
         const createdAt = Date.now();
         const newComment = new Comment({
             comment,

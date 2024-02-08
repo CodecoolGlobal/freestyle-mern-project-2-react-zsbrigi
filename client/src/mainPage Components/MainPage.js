@@ -13,6 +13,7 @@ function MaingPage() {
 			try {
 				const httpResponse = await fetch('/api/recipes');
 				const allRecipe = await httpResponse.json();
+				console.log(allRecipe)
 				setRecipes(allRecipe);
 			} catch (error) {
 				console.error(error);

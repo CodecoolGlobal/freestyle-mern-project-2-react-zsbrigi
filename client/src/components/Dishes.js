@@ -8,8 +8,7 @@ import HandleSaveButton from "./SaveButton.js";
 function Dishes() {
 	const [recipes, setRecipes] = useState([]);
 	let { dishType } = useParams();
-	console.log(dishType);
-
+	
 	useEffect(() => {
 		async function fetchdata(url) {
 			try {
@@ -39,14 +38,14 @@ function Dishes() {
 						<p>time: {dish.time}</p>
 						<p>Ingredients:</p>
 						<IngredientsTable recipe={dish}></IngredientsTable>
-						<button
+						{/* <button
 							onClick={() => {
 								HandleSaveButton(dish, recipes)
 							}
 							}
 						>
 							Save
-						</button>
+						</button> */}
 						<CommentSection recipeIds={dish._id}></CommentSection>
 					</div>
 				))}
