@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import Popup from "reactjs-popup";
 export default function EditRecipe({ id, update, onEditRecipe }) {
   const [isEdited, setIsEdited] = useState(false)
   const [editedRecipe, setEditedRecipe] = useState(null)
@@ -24,47 +24,44 @@ export default function EditRecipe({ id, update, onEditRecipe }) {
 
   return (
     <>
-      <button onClick={handleEditClick}>Edit recipe</button>
+      {!isEdited && <button onClick={handleEditClick}>Edit recipe</button>}
       {isEdited &&
-        <form onSubmit={handleEditRecipe}>
-          <label htmlFor="mealName">Meal Name:</label>
-          <input
-            value={editedRecipe.mealName}
-            id="mealName"
-            onChange={(e) => setEditedRecipe(prev => ({ ...prev, mealName: e.target.value }))}
-          ></input>
-          <label htmlFor="img">Image:</label>
-          <input
-            value={editedRecipe.img}
-            id="img"
-            onChange={(e) => setEditedRecipe(prev => ({ ...prev, img: e.target.value }))}
-          ></input>
-          <label htmlFor="ingredientName">Ingredient Name:</label>
-          <input
-            value={editedRecipe.ingredientName}
-            id="ingredientName"
-            onChange={(e) => setEditedRecipe(prev => ({ ...prev, ingredientName: e.target.value }))}
-          ></input>
-          <label htmlFor="ingredientAmount">Ingredient Amount:</label>
-          <input
-            value={editedRecipe.ingredientAmount}
-            id="ingredientAmount"
-            onChange={(e) => setEditedRecipe(prev => ({ ...prev, ingredientAmount: e.target.value }))}
-          ></input>
-          <label htmlFor="description">Description:</label>
-          <input
-            value={editedRecipe.description}
-            id="description"
-            onChange={(e) => setEditedRecipe(prev => ({ ...prev, description: e.target.value }))}
-          ></input>
-          <label htmlFor="time">Time to make:</label>
-          <input
-            value={editedRecipe.time}
-            id="time"
-            onChange={(e) => setEditedRecipe(prev => ({ ...prev, time: e.target.value }))}
-          ></input>
-          <button type="submit">Save</button>
-        </form>
+        <Popup trigger={<button>Edit recipe</button>}
+          position="bottom center">
+          <form onSubmit={handleEditRecipe}>
+            <label htmlFor="mealName">Meal Name:</label>
+            <input
+              value={editedRecipe.mealName}
+              id="mealName"
+              onChange={(e) => setEditedRecipe(prev => ({ ...prev, mealName: e.target.value }))}
+            ></input> <br />
+            <label htmlFor="img">Image:</label>
+            <input
+              value={editedRecipe.img}
+              id="img"
+              onChange={(e) => setEditedRecipe(prev => ({ ...prev, img: e.target.value }))}
+            ></input> <br />
+            <label htmlFor="ingredients">Ingredients:</label>
+            <input
+              value={editedRecipe.ingredients}
+              id="ingredients"
+              onChange={(e) => setEditedRecipe(prev => ({ ...prev, ingredients: e.target.value }))}
+            ></input> <br />
+            <label htmlFor="description">Description:</label>
+            <input
+              value={editedRecipe.description}
+              id="description"
+              onChange={(e) => setEditedRecipe(prev => ({ ...prev, description: e.target.value }))}
+            ></input> <br />
+            <label htmlFor="time">Time to make:</label>
+            <input
+              value={editedRecipe.time}
+              id="time"
+              onChange={(e) => setEditedRecipe(prev => ({ ...prev, time: e.target.value }))}
+            ></input> <br />
+            <button type="submit">Save</button>
+          </form>
+        </Popup>
       }
     </>
   );

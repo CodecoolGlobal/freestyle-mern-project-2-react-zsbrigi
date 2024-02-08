@@ -3,8 +3,7 @@ import { useState } from "react";
 export default function NewRecipeForm({ onAddNewRecipe }) {
   const [mealName, setMealName] = useState("");
   const [img, setImg] = useState("");
-  const [ingredientName, setIngredientName] = useState("");
-  const [ingredientAmount, setIngredientAmount] = useState("");
+  const [ingredients, setIngredients] = useState("");
   const [description, setDescription] = useState("");
   const [time, setTime] = useState("");
 
@@ -13,8 +12,7 @@ export default function NewRecipeForm({ onAddNewRecipe }) {
     const newRecipeDetails = {
       mealName,
       img,
-      ingredientName,
-      ingredientAmount,
+      ingredients,
       description,
       time,
     };
@@ -41,17 +39,11 @@ export default function NewRecipeForm({ onAddNewRecipe }) {
         id="img"
         onChange={(e) => setImg(e.target.value)}
       ></input> <br />
-      <label htmlFor="ingredientName">Ingredient Name:</label>
+      <label htmlFor="ingredients">Ingredients:</label>
       <input
-        value={ingredientName}
-        id="ingredientName"
-        onChange={(e) => setIngredientName(e.target.value)}
-      ></input> <br />
-      <label htmlFor="ingredientAmount">Ingredient Amount:</label>
-      <input
-        value={ingredientAmount}
-        id="ingredientAmount"
-        onChange={(e) => setIngredientAmount(e.target.value)}
+        value={ingredients}
+        id="ingredients"
+        onChange={(e) => setIngredients(e.target.value)}
       ></input> <br />
       <label htmlFor="description">Description:</label>
       <input

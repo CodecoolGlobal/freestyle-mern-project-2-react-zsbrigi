@@ -9,9 +9,9 @@ function Header() {
 
 	return (
 		<div className='header'>
-			<p id='logo'>add a logo here</p>
+			<a href="/" id="logo" ><img style={{ width: "74px", height: "74px", borderRadius: "50%" }} src={`/src/Assets/logo.jpg`} alt={'logo'} /></a>
+			<span><a href="/">Food Friends Forever</a></span>
 			<ul className='navbar'>
-				<li><a href="/" className={isCurrentPage() ? 'active' : ''}>Home</a></li>
 				<li><a href="/dishes/chicken" className={isCurrentPage('chicken') ? 'active' : ''}>Chicken</a></li>
 				<li><a href="/dishes/beef" className={isCurrentPage('beef') ? 'active' : ''}>Beef</a></li>
 				<li><a href="/dishes/pasta" className={isCurrentPage('pasta') ? 'active' : ''}>Pasta</a></li>

@@ -9,7 +9,9 @@ dotenv.config();
 import path from "path";
 import url from "url";
 const __filename = url.fileURLToPath(import.meta.url);
+console.log(import.meta.url);
 const __dirname = path.dirname(__filename);
+console.log(__dirname);
 
 const app = express();
 app.use(express.json());
@@ -29,55 +31,61 @@ app.get("/api/recipes", async (req, res) => {
   res.json(recipes);
 });
 
+app.get("/api/user/recipes", async (req, res) => {
+  const recipes = await UserRecipe.find();
+  res.json(recipes);
+});
+
 app.get("/api/:type", async (req, res) => {
   const dishType = req.params.type;
   const dishes = await Recipe.find({ type: dishType });
   res.json(dishes);
 });
 
-app.get("/user/recipes", async (req, res) => {
-  const recipes = await UserRecipe.find({});
-  res.send(recipes);
-});
 
-app.get("/user/recipes/:id", async (req, res) => {
+app.get("/api/user/recipes/:id", async (req, res) => {
   const recipeId = req.params.id;
   const recipe = await UserRecipe.find({ _id: recipeId });
   res.send(recipe);
 });
 
-app.patch('/user/recipes/:id', async (req, res) => {
-  const recipeId = req.params.id;
-  const editedRecipe = await UserRecipe.findById(recipeId)
-  editedRecipe.mealName = req.body.mealName || editedRecipe.mealName;
-  editedRecipe.img = req.body.img || editedRecipe.img;
-  editedRecipe.ingredients = req.body.ingredients || editedRecipe.ingredients;
-  editedRecipe.description = req.body.description || editedRecipe.description;
-  editedRecipe.time = req.body.time || editedRecipe.time;
-  await editedRecipe.save();
-  res.send(editedRecipe);
-})
+// app.patch('/user/recipes/:id', async (req, res) => {
+//   const recipeId = req.params.id;
+//   const editedRecipe = await UserRecipe.findById(recipeId)
+//   editedRecipe.mealName = req.body.mealName || editedRecipe.mealName;
+//   editedRecipe.img = req.body.img || editedRecipe.img;
+//   editedRecipe.ingredients = req.body.ingredients || editedRecipe.ingredients;
+//   editedRecipe.description = req.body.description || editedRecipe.description;
+//   editedRecipe.time = req.body.time || editedRecipe.time;
+//   await editedRecipe.save();
+//   res.send(editedRecipe);
+// })
 
 // app.patch("/user/recipes/:id", async (req, res) => {
-//   const recipe = req.body;
 //   const recipeId = req.params.id;
 //   if (recipeId !== -1) {
-//     const updatedRecipe = {
-//       mealName: recipe.mealName,
-//       img: recipe.img,
-//       ingredients: recipe.ingredients,
-//       description: recipe.description,
-//       time: recipe.time,
-//     };
+//     // const updatedRecipe = {
+//     //   mealName: recipe.mealName,
+//     //   img: recipe.img,
+//     //   ingredients: recipe.ingredients,
+//     //   description: recipe.description,
+//     //   time: recipe.time,
+//     // };
 //     const newUpdatedRecipe = await UserRecipe.updateOne(
 //       { _id: recipeId },
-//       { $set: updatedRecipe }
+//       { $set: req.body }, { new: true }
 //     );
 //     res.send(newUpdatedRecipe);
 //   }
 // });
 
-app.post("/user/recipes", async (req, res) => {
+app.patch('/api/user/recipes/:id', async (req, res) => {
+  const recipeId = req.params.id;
+  const updatedRecipe = await UserRecipe.findByIdAndUpdate(recipeId, req.body, { new: true })
+  res.send(updatedRecipe);
+})
+
+app.post("/api/user/recipes", async (req, res) => {
   const mealName = req.body.mealName;
   const img = req.body.img;
   const ingredients = req.body.ingredients;
@@ -94,7 +102,7 @@ app.post("/user/recipes", async (req, res) => {
   res.json(newRecipe);
 });
 
-app.delete("/user/recipes/:id", async (req, res) => {
+app.delete("/api/user/recipes/:id", async (req, res) => {
   const recipeId = req.params.id;
   if (recipeId !== -1) {
     await UserRecipe.deleteOne({ _id: recipeId });
@@ -103,9 +111,9 @@ app.delete("/user/recipes/:id", async (req, res) => {
   }
 });
 
+
 app.post("/api/favorites", (req, res) => {
   console.log("request: ", req.body);
-
   const mealName = req.body.mealName;
   const ingredients = req.body.ingredients;
   const description = req.body.description;
@@ -135,3 +143,7 @@ app.delete("/api/favorites", (req, res) => {
 app.listen(PORT, () => {
   console.log(`This server is running on PORT ${PORT}`);
 });
+
+
+
+
