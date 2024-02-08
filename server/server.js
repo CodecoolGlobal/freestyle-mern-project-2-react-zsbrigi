@@ -1,9 +1,11 @@
 import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
-import Recipe from "./model/Recipe.js";
+import Recipe from './model/Recipe.js';
+import Comment from "./model/Comment.js";
 import Favorite from "./model/Favorite.js";
 import UserRecipe from "./model/UserRecipe.js";
+
 
 dotenv.config();
 import path from "path";
@@ -22,7 +24,6 @@ app.use(express.static(path.join(__dirname, "../client")));
 async function connectToMongoose() {
   await mongoose.connect(process.env.URL);
   console.log("The server is connected.");
-  // console.log(__dirname);
 }
 connectToMongoose();
 
@@ -31,16 +32,56 @@ app.get("/api/recipes", async (req, res) => {
   res.json(recipes);
 });
 
+app.get("/api/comments", async (req, res) => {
+  const comments = await Comment.find();
+  res.json(comments);
+})
+
+app.get("/api/favorites", async (req, res) => {
+  const favorties = await Favorite.find({});
+  res.json(favorties);
+});
 app.get("/api/user/recipes", async (req, res) => {
   const recipes = await UserRecipe.find();
   res.json(recipes);
 });
-
 app.get("/api/:type", async (req, res) => {
   const dishType = req.params.type;
   const dishes = await Recipe.find({ type: dishType });
   res.json(dishes);
 });
+
+
+
+app.post("/api/comments", async (req, res) => {
+  try {
+    const comment = req.body.newComment;
+    const recipeId = req.body.recipeIds
+    const createdAt = Date.now();
+    const newComment = new Comment({
+      comment,
+      createdAt,
+      recipe: recipeId.recipeIds
+
+    })
+    const savedComment = await newComment.save()
+    res.json(savedComment)
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({ success: false })
+  }
+})
+
+app.delete("/api/comments/:id", async (req, res) => {
+  const commentId = req.params.id
+  try {
+    const deletedComment = await Comment.findByIdAndDelete(commentId)
+    res.json({ status: "deleted" })
+  } catch (error) {
+    console.error(error)
+  }
+})
+
 
 
 app.get("/api/user/recipes/:id", async (req, res) => {
@@ -78,7 +119,6 @@ app.get("/api/user/recipes/:id", async (req, res) => {
 //     res.send(newUpdatedRecipe);
 //   }
 // });
-
 app.patch('/api/user/recipes/:id', async (req, res) => {
   const recipeId = req.params.id;
   const updatedRecipe = await UserRecipe.findByIdAndUpdate(recipeId, req.body, { new: true })
@@ -112,33 +152,48 @@ app.delete("/api/user/recipes/:id", async (req, res) => {
 });
 
 
-app.post("/api/favorites", (req, res) => {
+app.post("/api/favorites", async (req, res) => {
   console.log("request: ", req.body);
+
   const mealName = req.body.mealName;
   const ingredients = req.body.ingredients;
   const description = req.body.description;
   const time = req.body.time;
   const type = req.body.type;
 
-  const favorite = new Favorite({
-    mealName,
-    ingredients,
-    description,
-    time,
-    type,
-  });
-
-  favorite
-    .save()
-    .then((favorite) => res.json(favorite))
-    .catch((err) => {
-      res.status(400).json({ success: false });
+  try {
+    const favorite = new Favorite({
+      mealName,
+      ingredients,
+      description,
+      time,
+      type,
     });
+
+    /* favorite
+      .save()
+      .then((favorite) => res.json(favorite))
+      .catch((err) => {
+        res.status(400).json({ success: false });
+      }); */
+
+    const savedToFavorites = await favorite.save();
+    res.json(savedToFavorites);
+  } catch (error) {
+    throw new Error(error);
+  }
 });
 
-app.delete("/api/favorites", (req, res) => {
-  const favoriteDishId = req.params._id;
-});
+app.delete('/api/favorites/:name', async (req, res) => {
+  const favoriteName = req.params.name;
+  try {
+    const deletedFavorite = await Favorite.deleteOne({ mealName: favoriteName });
+    res.json(deletedFavorite);
+  } catch (error) {
+    throw new Error(error);
+  }
+
+})
 
 app.listen(PORT, () => {
   console.log(`This server is running on PORT ${PORT}`);

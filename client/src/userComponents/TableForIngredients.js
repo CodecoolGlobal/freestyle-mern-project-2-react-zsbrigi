@@ -1,6 +1,5 @@
 
 function TableForIngredients({ ingredients }) {
-    console.log(ingredients.join(', ').split(','));
     const ingredientArray = ingredients.join(', ').split(',');
     return (
         <table className='ingredientsUser'>
