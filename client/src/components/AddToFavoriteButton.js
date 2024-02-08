@@ -13,7 +13,7 @@ function AddToFavoriteButton({ recipe, onDeleteState, onAddState, favorites }) {
 			throw new Error("Error during add to Favorites.");
 		}
 		const newRecipe = await httpResponse.json();
-		onDeleteState(newRecipe);
+		onAddState(newRecipe);
 		return newRecipe;
 	}
 
@@ -24,7 +24,7 @@ function AddToFavoriteButton({ recipe, onDeleteState, onAddState, favorites }) {
 		if (!httpResponse.ok) {
 			throw new Error("Error during add to Favorites.");
 		}
-		onAddState(name);
+		onDeleteState(name);
 		return httpResponse;
 	}
 

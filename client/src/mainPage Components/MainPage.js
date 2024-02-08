@@ -40,7 +40,7 @@ function MaingPage() {
 					<div key={recipe._id}>
 						<h1>{recipe.mealName}</h1>
 						<div className='flexBox'>
-							<img src={`/src/Assets/${recipe.mealName.replaceAll(' ', '')}.jpg`} alt={recipe.mealName.replaceAll(' ', '')} />
+							<img className="mainImg" src={`/src/Assets/${recipe.mealName.replaceAll(' ', '')}.jpg`} alt={recipe.mealName.replaceAll(' ', '')} />
 							<IngredientsTable recipe={recipe}></IngredientsTable>
 						</div>
 						<p>{recipe.description}</p>
