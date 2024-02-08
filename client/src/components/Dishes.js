@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import IngredientsTable from "./IngredientsTable";
 import { useParams } from "react-router-dom";
 import Header from "../mainPage Components/Header.js";
+import CommentSection from "./Comments.js";
 
 function Dishes() {
 	const [beefDishes, setBeefdishes] = useState([]);
@@ -35,6 +36,7 @@ function Dishes() {
 						<p>Ingredients:</p>
 						<IngredientsTable recipe={dish}></IngredientsTable>
 						<button>Save</button>
+						<CommentSection recipeIds={dish._id}></CommentSection>
 					</div>
 				))}
 			</div>

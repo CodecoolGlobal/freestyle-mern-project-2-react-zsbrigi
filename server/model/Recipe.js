@@ -6,7 +6,8 @@ const recipeSchema = new Schema({
     ingredients: Array,
     description: String,
     time: String,
-    type: String
+    type: String,
+    comments: [{ type: Schema.Types.ObjectId, ref: 'Comment' }]
 })
 
 export default model('Recipe', recipeSchema);
