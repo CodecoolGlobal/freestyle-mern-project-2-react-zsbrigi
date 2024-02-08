@@ -10,7 +10,7 @@ export default function NewRecipeForm({ onAddNewRecipe }) {
 
   const handleAddNewRecipe = (event) => {
     event.preventDefault();
-    const newRecipe = {
+    const newRecipeDetails = {
       mealName,
       img,
       ingredientName,
@@ -21,12 +21,11 @@ export default function NewRecipeForm({ onAddNewRecipe }) {
     fetch("/user/recipes", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(newRecipe),
+      body: JSON.stringify(newRecipeDetails),
     })
       .then((response) => response.json())
-      .then((newRecipe) => console.log(newRecipe))
+      .then((newRecipe) => onAddNewRecipe(newRecipe))
       .catch((err) => console.error(err));
-    onAddNewRecipe(newRecipe);
   };
   return (
     <form onSubmit={handleAddNewRecipe}>

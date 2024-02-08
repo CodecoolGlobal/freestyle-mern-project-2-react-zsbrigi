@@ -26,67 +26,10 @@ app.get("/api/recipes", async (req, res) => {
   res.json(recipes);
 });
 
-app.get("/api/beef", async (req, res) => {
-  const beefDishes = await Recipe.find({ type: "beef" });
-  res.json(beefDishes);
-});
-
-app.get("/api/chicken", async (req, res) => {
-  const chickenDishes = await Recipe.find({ type: "chicken" });
-  res.json(chickenDishes);
-});
-
-app.get("/api/pasta", async (req, res) => {
-  const pastaDishes = await Recipe.find({ type: "pasta" });
-  res.json(pastaDishes);
-});
-
-app.get("/api/dessert", async (req, res) => {
-  const dessertDish = await Recipe.find({ type: "dessert" });
-  res.json(dessertDish);
-});
-
-app.get("/api/vegetarian", async (req, res) => {
-  const vegetarianDishes = await Recipe.find({ type: "vegetarian" });
-  res.json(vegetarianDishes);
-});
-
-app.get("/api/beef", async (req, res) => {
-  const beefDishes = await Recipe.find({ type: "beef" });
-  res.json(beefDishes);
-});
-
-app.get("/api/chicken", async (req, res) => {
-  const chickenDishes = await Recipe.find({ type: "chicken" });
-  res.json(chickenDishes);
-});
-
-app.get("/api/pasta", async (req, res) => {
-  const pastaDishes = await Recipe.find({ type: "pasta" });
-  res.json(pastaDishes);
-});
-
-app.get("/api/dessert", async (req, res) => {
-  const dessertDish = await Recipe.find({ type: "dessert" });
-  res.json(dessertDish);
-});
-
-app.get("/api/vegetarian", async (req, res) => {
-  const vegetarianDishes = await Recipe.find({ type: "vegetarian" });
-  res.json(vegetarianDishes);
-});
-
-app.get("/user/recipes", async (req, res) => {
-  const userRecipes = await UserRecipe.find({});
-  res.send(userRecipes);
-});
-
-app.get("/user/recipes/:id", async (req, res) => {
-  const recipeID = req.params.id;
-  if (recipeID !== -1) {
-    const recipe = await UserRecipe.findOne({ _id: recipeID });
-    res.send(recipe);
-  }
+app.get("/api/:type", async (req, res) => {
+  const dishType = req.params.type;
+  const dishes = await Recipe.find({ type: dishType });
+  res.json(dishes);
 });
 
 // app.patch('/user/recipes/:id', async (req, res) => {
