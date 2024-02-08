@@ -15,6 +15,7 @@ console.log(import.meta.url);
 const __dirname = path.dirname(__filename);
 console.log(__dirname);
 
+
 const app = express();
 app.use(express.json());
 const PORT = 5000;
@@ -184,6 +185,68 @@ app.post("/api/favorites", async (req, res) => {
   }
 });
 
+
+
+app.post("/api/recipes", async (req, res) => {
+  console.log("Ez az update a ratingre:", req.body);
+  try {
+    const [rating, ingredientId, userVotes] = req.body;
+    const updatedIngredient = await Recipe.findOneAndUpdate(
+      { _id: ingredientId },
+      [
+        {
+          $set: {
+            ratings: {
+              $ifNull: ["$rating", [rating]],
+            },
+            userVotes: {
+              $ifNull: ["$userVotes", userVotes],
+            },
+          },
+        },
+      ],
+      { new: true, upsert: true }
+    );
+    console.log(updatedIngredient);
+    res.json(updatedIngredient);
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).json({ error: "something went wrong" });
+  }
+});
+
+app.patch("/api/recipes/:id", async (req, res) => {
+  const dishId = req.params.id;
+
+  if (mongoose.isValidObjectId(dishId)) {
+    try {
+      const newRating = req.body.rating;
+      console.log("The rating in serveeeer:", newRating);
+      console.log(newRating);
+      const updatedRecipe = await Recipe.findByIdAndUpdate(
+        dishId,
+        {
+          $push: { ratings: newRating },
+          $inc: { userVotes: 1 },
+        },
+        { new: true }
+      );
+
+      if (!updatedRecipe) {
+        return res.status(404).json({ error: "Recipe not found" });
+      }
+
+      console.log(updatedRecipe);
+      res.json({ updatedRecipe });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: "Could not update the document" });
+    }
+  } else {
+    res.status(400).json({ error: "Not a valid recipe Id" });
+  }
+});
+
 app.delete('/api/favorites/:name', async (req, res) => {
   const favoriteName = req.params.name;
   try {
@@ -194,6 +257,7 @@ app.delete('/api/favorites/:name', async (req, res) => {
   }
 
 })
+
 
 app.listen(PORT, () => {
   console.log(`This server is running on PORT ${PORT}`);
