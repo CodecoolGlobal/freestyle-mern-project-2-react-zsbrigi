@@ -31,7 +31,6 @@ a {
 }
 
 body {
-  margin-top: 63px;
   padding: 0px;
   background: rgb(27, 251, 255);
   background: linear-gradient(192deg, rgba(27, 251, 255, 1) 23%, rgba(202, 238, 172, 1) 63%);
@@ -41,14 +40,12 @@ body {
   text-align: center;
   height: 100vh;
   overflow: hidden;
+  height: 90vh;
+  margin-top: 4.49%;
 }
 
 .recipeList {
   text-align: center;
-}
-
-.slick-dots {
-  background-color: rgb(202, 238, 172, 1);
 }
 
 .navbar {
@@ -100,4 +97,11 @@ body {
 
 .navbar a.active {
   color: rgb(68, 0, 255);
+}
+
+.flexBox {
+  display: flex;
+  width: 50%;
+  justify-content: center;
+  margin: auto;
 }

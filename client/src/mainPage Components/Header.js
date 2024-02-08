@@ -17,6 +17,7 @@ function Header() {
 				<li><a href="/dishes/pasta" className={isCurrentPage('pasta') ? 'active' : ''}>Pasta</a></li>
 				<li><a href="/dishes/vegetarian" className={isCurrentPage('vegetarian') ? 'active' : ''}>Vegetarian</a></li>
 				<li><a href="/dishes/dessert" className={isCurrentPage('dessert') ? 'active' : ''}>Dessert</a></li>
+				<li><a href="/dishes/favorites" className={isCurrentPage('favorites') ? 'active' : ''}>Favorites</a></li>
 			</ul>
 		</div>
 	)
