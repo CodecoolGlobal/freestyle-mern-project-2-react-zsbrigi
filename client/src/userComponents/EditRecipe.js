@@ -10,7 +10,7 @@ export default function EditRecipe({ id, update, onEditRecipe }) {
   }
 
   const handleEditRecipe = async () => {
-    const httpResponse = await fetch(`/user/recipes/${id}`, {
+    const httpResponse = await fetch(`/api/recipe/${id}`, {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(editedRecipe)
