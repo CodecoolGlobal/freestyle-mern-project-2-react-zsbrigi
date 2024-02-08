@@ -13,7 +13,7 @@ function AddToFavoriteButton({ recipe, onDeleteState, onAddState, favorites }) {
 			throw new Error("Error during add to Favorites.");
 		}
 		const newRecipe = await httpResponse.json();
-		onDeleteState(newRecipe);
+		onAddState(newRecipe);
 		return newRecipe;
 	}
 
@@ -24,7 +24,7 @@ function AddToFavoriteButton({ recipe, onDeleteState, onAddState, favorites }) {
 		if (!httpResponse.ok) {
 			throw new Error("Error during add to Favorites.");
 		}
-		onAddState(name);
+		onDeleteState(name);
 		return httpResponse;
 	}
 
@@ -46,7 +46,7 @@ function AddToFavoriteButton({ recipe, onDeleteState, onAddState, favorites }) {
 
 	return (
 		<>
-			<button onClick={() => handleUpdateButton(recipe)}>{!isAddedToFavorite(recipe.mealName) ? "Add To Favorites" : "Remove From Favorites"}</button>
+			<button className="addToFavorites" onClick={() => handleUpdateButton(recipe)}>{!isAddedToFavorite(recipe.mealName) ? "Add To Favorites" : "Remove From Favorites"}</button>
 		</>
 	)
 }
