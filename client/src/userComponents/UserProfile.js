@@ -4,13 +4,14 @@ import { useEffect, useState } from "react";
 import NewRecipeForm from "./NewRecipeForm";
 import DeleteRecipe from "./DeleteRecipe";
 import EditRecipe from "./EditRecipe";
+import IngredientsTable from "../components/IngredientsTable";
 
 function UserProfile() {
   const [userRecipes, setUserRecipes] = useState([]);
 
   useEffect(() => {
     async function fetchData() {
-      const response = await fetch("/user/recipes");
+      const response = await fetch("/api/user/recipes");
       const userRecipes = await response.json();
       setUserRecipes(userRecipes);
     }
@@ -32,31 +33,34 @@ function UserProfile() {
   }
 
   return (
-    <>
+    <div className="userProfile">
       {userRecipes.length > 0 && (
         <div className="userRecipes">
           {userRecipes.map((userRecipe) => {
             return (
-              <div className="userRecipe">
-                <h3>{userRecipe.mealName}</h3>
-                <h3>{userRecipe._id}</h3>
-                <EditRecipe update={userRecipe} id={userRecipe._id} onEditRecipe={handleEditRecipe} />
+              <div className="userRecipe" key={userRecipe._id}>
+                <h1>{userRecipe.mealName}</h1>
+                <img src={userRecipe.img} alt="UserImage" />
+                <IngredientsTable recipe={userRecipe}></IngredientsTable>
+                <p>{userRecipe.description}</p>
+                <p>{userRecipe.time}</p>
                 <DeleteRecipe
                   onDeleteRecipe={handleDeleteRecipe}
                   id={userRecipe._id}
                 />
+                <EditRecipe update={userRecipe} id={userRecipe._id} onEditRecipe={handleEditRecipe} />
               </div>
             );
           })}
         </div>
       )}
       <Popup
-        trigger={<button> Add new Recipe!</button>}
-        position="right center"
+        trigger={<button className="popupButton"> Add new Recipe!</button>}
+        position="bottom center"
       >
         <NewRecipeForm onAddNewRecipe={handleNewRecipe} />
       </Popup>
-    </>
+    </div>
   );
 }
 

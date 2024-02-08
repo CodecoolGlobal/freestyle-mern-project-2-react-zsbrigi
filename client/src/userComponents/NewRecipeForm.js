@@ -18,7 +18,7 @@ export default function NewRecipeForm({ onAddNewRecipe }) {
       description,
       time,
     };
-    fetch("/user/recipes", {
+    fetch("/api/user/recipes", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(newRecipeDetails),
@@ -29,42 +29,42 @@ export default function NewRecipeForm({ onAddNewRecipe }) {
   };
   return (
     <form onSubmit={handleAddNewRecipe}>
-      <label for="mealName">Meal Name:</label>
+      <label htmlFor="mealName">Meal Name:</label>
       <input
         value={mealName}
         id="mealName"
         onChange={(e) => setMealName(e.target.value)}
-      ></input>
-      <label for="img">Image:</label>
+      ></input> <br />
+      <label htmlFor="img">Image:</label>
       <input
         value={img}
         id="img"
         onChange={(e) => setImg(e.target.value)}
-      ></input>
-      <label for="ingredientName">Ingredient Name:</label>
+      ></input> <br />
+      <label htmlFor="ingredientName">Ingredient Name:</label>
       <input
         value={ingredientName}
         id="ingredientName"
         onChange={(e) => setIngredientName(e.target.value)}
-      ></input>
-      <label for="ingredientAmount">Ingredient Amount:</label>
+      ></input> <br />
+      <label htmlFor="ingredientAmount">Ingredient Amount:</label>
       <input
         value={ingredientAmount}
         id="ingredientAmount"
         onChange={(e) => setIngredientAmount(e.target.value)}
-      ></input>
-      <label for="description">Description:</label>
+      ></input> <br />
+      <label htmlFor="description">Description:</label>
       <input
         value={description}
         id="description"
         onChange={(e) => setDescription(e.target.value)}
-      ></input>
-      <label for="time">Time to make:</label>
+      ></input> <br />
+      <label htmlFor="time">Time to make:</label>
       <input
         value={time}
         id="time"
         onChange={(e) => setTime(e.target.value)}
-      ></input>
+      ></input> <br />
       <button type="submit">Add New Recipe</button>
     </form>
   );
