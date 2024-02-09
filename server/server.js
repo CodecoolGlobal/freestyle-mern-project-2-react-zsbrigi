@@ -147,7 +147,6 @@ app.delete("/api/user/recipes/:id", async (req, res) => {
   const recipeId = req.params.id;
   if (recipeId !== -1) {
     await UserRecipe.deleteOne({ _id: recipeId });
-    console.log(recipeId);
     return res.json({ id: recipeId });
   }
 });
@@ -207,7 +206,6 @@ app.post("/api/recipes", async (req, res) => {
       ],
       { new: true, upsert: true }
     );
-    console.log(updatedIngredient);
     res.json(updatedIngredient);
   } catch (error) {
     console.log(error.message);
@@ -222,7 +220,6 @@ app.patch("/api/recipes/:id", async (req, res) => {
     try {
       const newRating = req.body.rating;
       console.log("The rating in serveeeer:", newRating);
-      console.log(newRating);
       const updatedRecipe = await Recipe.findByIdAndUpdate(
         dishId,
         {
@@ -236,7 +233,6 @@ app.patch("/api/recipes/:id", async (req, res) => {
         return res.status(404).json({ error: "Recipe not found" });
       }
 
-      console.log(updatedRecipe);
       res.json({ updatedRecipe });
     } catch (error) {
       console.error(error);

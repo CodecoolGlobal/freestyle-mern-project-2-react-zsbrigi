@@ -25,7 +25,6 @@ function CommentSection(recipeIds) {
                 return res.json()
             })
             .then(data => {
-                console.log(data)
                 setComments(data)
             })
     }, [])
@@ -74,7 +73,7 @@ function CommentSection(recipeIds) {
             <div className="comments">
                 {comments.map((comment) => (
                     JSON.stringify(recipes) === JSON.stringify(comment.recipe) &&
-                    <div className="comment">
+                    <div className="comment" key={comment._id}>
                         <button onClick={() => handleDelete(comment._id)} className="deleteComment">X</button>
                         <p>{comment.createdAt.split('T').join(' ').slice(0, -5)}</p>
                         <p key={comment._id}>{comment.comment}</p>
