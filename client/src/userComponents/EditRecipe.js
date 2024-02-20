@@ -1,13 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Popup from "reactjs-popup";
 export default function EditRecipe({ id, update, onEditRecipe }) {
-  const [isEdited, setIsEdited] = useState(false)
   const [editedRecipe, setEditedRecipe] = useState(null)
 
-  const handleEditClick = () => {
-    setIsEdited(true)
+  useEffect(() => {
     setEditedRecipe(update);
-  }
+  }, [update])
 
   const handleEditRecipe = async (event) => {
     event.preventDefault();
@@ -18,16 +16,14 @@ export default function EditRecipe({ id, update, onEditRecipe }) {
     })
     const updatedRecipe = await httpResponse.json();
     console.log(updatedRecipe);
-    setIsEdited(false);
     onEditRecipe(updatedRecipe)
   };
 
   return (
     <>
-      {!isEdited && <button onClick={handleEditClick}>Edit recipe</button>}
-      {isEdited &&
+      {editedRecipe &&
         <Popup trigger={<button>Edit recipe</button>}
-          position="bottom center">
+          position="right bottom">
           <form onSubmit={handleEditRecipe}>
             <label htmlFor="mealName">Meal Name:</label>
             <input
