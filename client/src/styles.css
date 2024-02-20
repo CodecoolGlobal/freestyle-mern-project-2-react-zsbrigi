@@ -4,10 +4,10 @@ body {
   font-family: "Haas Grot Text R Web", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
-ul {
+/* ul {
   list-style-position: inside;
   padding-left: 0;
-}
+} */
 
 table {
   border: 1px solid black;
@@ -86,21 +86,7 @@ body {
   margin-top: 83px;
 }
 
-.header {
-  text-shadow: none;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 20px 20px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.36);
-  height: 23px;
-  margin-bottom: 40px;
-  position: fixed;
-  top: 0;
-  width: 100%;
-  z-index: 1000;
-  background-color: #0cc2b6;
-}
+
 
 .commentButton {
   background-color: #EA4C89;
@@ -222,10 +208,10 @@ span {
 /* Media queries for responsiveness */
 
 @media only screen and (max-width: 768px) {
-  .navbar li {
+  /* .navbar li {
     padding: 0 10px;
     font-size: 14px;
-  }
+  } */
 
   .flexBox {
     width: 90%;
@@ -265,5 +251,96 @@ input[type="radio"] {
 @media only screen and (max-width: 100%) {
   .slick-slide {
     transform: scale(0.8);
+  }
+}
+
+nav {
+  text-shadow: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 20px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.36);
+  height: 23px;
+  margin-bottom: 40px;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+  background-color: #0cc2b6;
+}
+
+nav ul {
+  display: flex;
+  right: 0;
+}
+
+nav ul li {
+  list-style: none;
+  right: 0;
+}
+
+nav ul li a {
+  display: block;
+  text-decoration: none;
+  color: #1a1a1a;
+  padding: 10px;
+  margin: 0 10px;
+  border-radius: 0.5rem;
+}
+
+nav .menu {
+  display: flex;
+  position: absolute;
+  top: 17px;
+  right: 100px;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 40px;
+  height: 30px;
+}
+
+nav .menu div {
+  height: 0.4rem;
+  width: 100%;
+  background-color: black;
+  cursor: pointer;
+  border-radius: 0.2rem;
+}
+
+@media screen {
+  nav {
+    flex-direction: column;
+    align-items: start;
+  }
+
+  nav ul {
+    display: none;
+    flex-direction: column;
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  nav ul.open {
+    display: flex;
+    position: fixed;
+    background-color: #0cc2b6;
+    width: 25%;
+    top: 6%;
+    padding: 0;
+    font-size: larger;
+    height: 100%;
+  }
+
+  nav ul li {
+    right: 0;
+    width: 100%;
+    padding-bottom: 1%;
+    text-align: center;
+    border-bottom: 2px solid black;
+  }
+
+  nav ul li a {
+    right: 0;
   }
 }
