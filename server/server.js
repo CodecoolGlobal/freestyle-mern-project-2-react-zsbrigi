@@ -29,7 +29,6 @@ connectToMongoose();
 
 app.get("/api/recipes/", async (req, res) => {
   const recipes = await Recipe.find();
-
   return res.json(recipes);
 });
 
@@ -82,7 +81,7 @@ app.get("/api/dishes/:type", async (req, res) => {
     const dishes = await Recipe.find({ type: dishType })
       .skip(page * recipesPerPage - recipesPerPage)
       .limit(recipesPerPage);
-      console.log(page);
+    console.log(page);
     return res.json({
       pagination: {
         recipesCount,

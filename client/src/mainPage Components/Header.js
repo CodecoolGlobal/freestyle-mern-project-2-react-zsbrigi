@@ -12,9 +12,9 @@ function Header() {
 	function handleLogOut() {
 		window.confirm("Sure want to log out?")
 		localStorage.clear()
-			navigate("/")
+		navigate("/")
 
-		
+
 	}
 
 	return (
@@ -37,7 +37,7 @@ function Header() {
 				<li><Link to="/dishes/favorites" className={isCurrentPage('favorites') ? 'active' : ''}>Favorites</Link></li>
 				<li><Link to="/user/recipes" className={isCurrentPage('user') ? 'active' : ''}>Profile</Link></li>
 				<li><Link to="/user/login" >Login</Link></li>
-				<li><Link to="/user/register" >Sign Up</Link></li>
+				<li><Link to="/user/registration" >Sign Up</Link></li>
 				<li><button onClick={handleLogOut}>log out</button></li>
 			</ul>
 		</nav>

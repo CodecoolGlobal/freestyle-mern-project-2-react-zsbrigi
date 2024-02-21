@@ -26,7 +26,7 @@ function UserLogin() {
 				localStorage.setItem("user", user._id)
 				localStorage.setItem("isLoggedIn", true)
 				setUser(user);
-				navigate("/user/recipes");
+				navigate("/");
 			} else {
 				window.alert('Wrong Email or Password.')
 			}
@@ -48,7 +48,7 @@ function UserLogin() {
 				</div>
 				<button>Log in</button>
 			</form>
-			<h6>Don't you have an account?<Link to="/user/registration"><i>Sign in!</i></Link></h6>
+			<h6>Don't you have an account?<Link to="/user/registration"><i>Sign up!</i></Link></h6>
 		</div>
 	)
 }
