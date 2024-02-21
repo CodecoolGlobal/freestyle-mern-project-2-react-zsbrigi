@@ -10,11 +10,14 @@ function Header() {
 	const navigate = useNavigate()
 
 	function handleLogOut() {
+		if (localStorage.getItem("user")) {
 		window.confirm("Sure want to log out?")
 		localStorage.clear()
 			navigate("/")
 
-		
+		} else {
+			window.alert('No user is logged in')
+		}
 	}
 
 	return (
