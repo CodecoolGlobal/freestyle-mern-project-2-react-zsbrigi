@@ -35,19 +35,22 @@ function CommentSection(recipeIds) {
 	async function handleSubmit(event) {
 		event.preventDefault()
 
-		const body = { newComment, recipeIds }
+        const userId = localStorage.getItem("user")
+
+		const body = { newComment, recipeIds, userId  }
 		try {
 			await fetch("/api/comments", {
 				method: "POST",
 				headers: { "Content-Type": "application/json" },
 				body: JSON.stringify(body)
 			})
+          
 
 
 			setNewComment('')
 		} catch (error) {
 			console.error(error)
-		}
+		} 
 
 		fetchComments()
 	}
@@ -76,6 +79,7 @@ function CommentSection(recipeIds) {
 					<div className="comment" key={comment._id}>
 						<button onClick={() => handleDelete(comment._id)} className="deleteComment">X</button>
 						<p>{comment.createdAt.split('T').join(' ').slice(0, -5)}</p>
+                        <p>user: {comment.user.name}</p>
 						<p key={comment._id}>{comment.comment}</p>
 					</div>
 				))}

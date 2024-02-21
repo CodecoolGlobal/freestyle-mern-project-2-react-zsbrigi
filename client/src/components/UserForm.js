@@ -24,6 +24,7 @@ function UserForm() {
 		const name = firstName + " " + secondName;
 		const newUser = { name, email, password };
 		postRequest(newUser);
+		
 		navigate("/user/login");
 	}
 

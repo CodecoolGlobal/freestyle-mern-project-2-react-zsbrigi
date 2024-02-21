@@ -27,6 +27,8 @@ function Header() {
 				<li><Link to="/dishes/dessert" className={isCurrentPage('dessert') ? 'active' : ''}>Dessert</Link></li>
 				<li><Link to="/dishes/favorites" className={isCurrentPage('favorites') ? 'active' : ''}>Favorites</Link></li>
 				<li><Link to="/user/recipes" className={isCurrentPage('user') ? 'active' : ''}>Profile</Link></li>
+				<li><Link to="/user/login" >Login</Link></li>
+				<li><Link to="/user/register" >Sign Up</Link></li>
 			</ul>
 		</nav>
 	)

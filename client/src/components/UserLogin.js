@@ -13,6 +13,8 @@ function UserLogin() {
 	const [user, setUser] = useState(null);
 	const navigate = useNavigate();
 
+	console.log(user)
+
 
 
 	function handleSignIn(event) {
@@ -20,7 +22,8 @@ function UserLogin() {
 		async function setFetchedData() {
 			const user = await fetchUser(email);
 			if (user?.password === password) {
-
+				localStorage.clear()
+				localStorage.setItem("user", user._id)
 				setUser(user);
 				navigate("/user/recipes");
 			} else {
