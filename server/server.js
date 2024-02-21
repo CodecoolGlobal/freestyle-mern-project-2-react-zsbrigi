@@ -34,7 +34,7 @@ app.get("/api/recipes/", async (req, res) => {
 });
 
 app.get("/api/comments", async (req, res) => {
-  const comments = await Comment.find();
+  const comments = await Comment.find().populate("user");
   res.json(comments);
 });
 
@@ -98,11 +98,13 @@ app.post("/api/comments", async (req, res) => {
   try {
     const comment = req.body.newComment;
     const recipeId = req.body.recipeIds;
+    const userId = req.body.userId
     const createdAt = Date.now();
     const newComment = new Comment({
       comment,
       createdAt,
       recipe: recipeId.recipeIds,
+      user: userId
     });
     const savedComment = await newComment.save();
     res.json(savedComment);
