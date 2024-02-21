@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 async function fetchUser(email) {
 	const httpResponse = await fetch(`/api/users?email=${email}`);
@@ -48,6 +48,7 @@ function UserLogin() {
 				</div>
 				<button>Log in</button>
 			</form>
+			<h6>Don't you have an account?<Link to="/user/registration"><i>Sign in!</i></Link></h6>
 		</div>
 	)
 }
