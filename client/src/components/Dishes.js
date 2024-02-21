@@ -19,6 +19,7 @@ function Dishes() {
     const httpResponse = await fetch("/api/favorites");
     const favoriteRecipes = await httpResponse.json();
     setFavorites(favoriteRecipes);
+	console.log(favoriteRecipes);
   }
 
   useEffect(() => {
@@ -33,7 +34,7 @@ function Dishes() {
         console.error(error);
       }
     }
-    fetchdata(`/api/${dishType}?page=${page}`);
+    fetchdata(`/api/dishes/${dishType}?page=${page}`);
     fetchFavorites();
   }, [dishType, rating, page]);
 
