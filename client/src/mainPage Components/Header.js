@@ -1,11 +1,20 @@
 import { useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 
 function Header() {
 	const [openMenu, setOpenMenu] = useState(false);
 	let { dishType } = useParams();
 	function isCurrentPage(path) {
 		return dishType === path;
+	}
+	const navigate = useNavigate()
+
+	function handleLogOut() {
+		window.confirm("Sure want to log out?")
+		localStorage.clear()
+			navigate("/")
+
+		
 	}
 
 	return (
@@ -29,6 +38,7 @@ function Header() {
 				<li><Link to="/user/recipes" className={isCurrentPage('user') ? 'active' : ''}>Profile</Link></li>
 				<li><Link to="/user/login" >Login</Link></li>
 				<li><Link to="/user/register" >Sign Up</Link></li>
+				<li><button onClick={handleLogOut}>log out</button></li>
 			</ul>
 		</nav>
 	)

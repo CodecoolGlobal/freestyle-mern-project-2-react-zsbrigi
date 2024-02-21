@@ -24,6 +24,7 @@ function UserLogin() {
 			if (user?.password === password) {
 				localStorage.clear()
 				localStorage.setItem("user", user._id)
+				localStorage.setItem("isLoggedIn", true)
 				setUser(user);
 				navigate("/user/recipes");
 			} else {

@@ -8,6 +8,7 @@ function CommentSection(recipeIds) {
 	const [comments, setComments] = useState([])
 	const [newComment, setNewComment] = useState("")
 
+    const loggedIn = localStorage.getItem("isLoggedIn")
 
 	async function fetchComments() {
 		try {
@@ -79,12 +80,12 @@ function CommentSection(recipeIds) {
 					<div className="comment" key={comment._id}>
 						<button onClick={() => handleDelete(comment._id)} className="deleteComment">X</button>
 						<p>{comment.createdAt.split('T').join(' ').slice(0, -5)}</p>
-                        <p>user: {comment.user.name}</p>
+                        <p>user: {comment.user?.name}</p>
 						<p key={comment._id}>{comment.comment}</p>
 					</div>
 				))}
 			</div>
-			<form onSubmit={handleSubmit}>
+			{loggedIn && <form onSubmit={handleSubmit}>
 				<textarea rows="10" cols="70"
 					className="commentArea"
 					value={newComment}
@@ -95,6 +96,7 @@ function CommentSection(recipeIds) {
 				</textarea>
 				<button className="commentButton" type="submit">Add comment</button>
 			</form>
+}
 		</div>
 	)
 }
