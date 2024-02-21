@@ -5,7 +5,7 @@ import Recipe from './model/Recipe.js';
 import Comment from "./model/Comment.js";
 import Favorite from "./model/Favorite.js";
 import UserRecipe from "./model/UserRecipe.js";
-
+import User from "./model/User.js";
 
 dotenv.config();
 import path from "path";
@@ -46,12 +46,22 @@ app.get("/api/user/recipes", async (req, res) => {
   const recipes = await UserRecipe.find();
   res.json(recipes);
 });
+
+app.get("/api/users/", async (req, res, next) => {
+  const queryEmail = req.query.email;
+  try {
+    const users = queryEmail ? await User.findOne({ email: queryEmail }) : await User.find();
+    return res.json(users);
+  } catch (error) {
+    return next(error);
+  }
+})
+
 app.get("/api/:type", async (req, res) => {
   const dishType = req.params.type;
   const dishes = await Recipe.find({ type: dishType });
   res.json(dishes);
 });
-
 
 
 app.post("/api/comments", async (req, res) => {
@@ -70,6 +80,16 @@ app.post("/api/comments", async (req, res) => {
   } catch (error) {
     console.error(error)
     res.status(500).json({ success: false })
+  }
+})
+
+app.post("/api/users", async (req, res, next) => {
+  const newUser = req.body;
+  try {
+    const addUser = await User.create(newUser);
+    return res.json(addUser);
+  } catch (error) {
+    return next(error);
   }
 })
 
