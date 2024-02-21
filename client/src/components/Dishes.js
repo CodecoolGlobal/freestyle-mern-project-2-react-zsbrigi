@@ -34,6 +34,7 @@ function Dishes() {
         console.error(error);
       }
     }
+    console.log(page);
     fetchdata(`/api/dishes/${dishType}?page=${page}`);
     fetchFavorites();
   }, [dishType, rating, page]);
@@ -56,15 +57,16 @@ function Dishes() {
 
   const handlerPreviousButon = () => {
     setPage((prev) => {
-      if (page === 1) return 1;
+      if ( page === 1) return 1;
       return prev - 1;
     });
   };
+  console.log(typeof page);
   const handlerNextButton = () => {
-    setPage((prev) => {
-      if (page === pageCount) return prev - 1;
+     setPage((prev) => {
+      if (page === pageCount) return prev;
       return prev + 1;
-    });
+    }); 
   };
 
   return (
@@ -77,8 +79,8 @@ function Dishes() {
         <br />
         PageCount: {pageCount}
         <button onClick={() => handlerPreviousButon()}> Previous</button>
-        <button onClick={() => handlerNextButton()}>Next</button>
-        <select value={page} onChange={(e) => setPage(e.target.value)}>
+        <button onClick={handlerNextButton}>Next</button>
+        <select value={page} onChange={(e) => setPage(Number(e.target.value))}>
           {Array(pageCount)
             .fill(null)
             .map((_, index) => {

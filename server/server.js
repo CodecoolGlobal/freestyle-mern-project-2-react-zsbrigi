@@ -65,12 +65,12 @@ app.get("/api/dishes/:type", async (req, res) => {
     console.log(dishType);
     const favoriteRecipesCount = await Favorite.find().count();
     const favoriteRecipes = await Favorite.find().skip(page * recipesPerPage - recipesPerPage).limit(recipesPerPage)
-    console.log(favoriteRecipes);
+    console.log("The favorites:", favoriteRecipes);
     const favoritePageCount = Math.ceil(favoriteRecipesCount / recipesPerPage)
     return res.json({
       pagination: {
         recipesCount: favoriteRecipesCount,
-        favoritePageCount,
+        pageCount: favoritePageCount,
       },
       dishes: favoriteRecipes,
     });
@@ -82,6 +82,7 @@ app.get("/api/dishes/:type", async (req, res) => {
     const dishes = await Recipe.find({ type: dishType })
       .skip(page * recipesPerPage - recipesPerPage)
       .limit(recipesPerPage);
+      console.log(page);
     return res.json({
       pagination: {
         recipesCount,
