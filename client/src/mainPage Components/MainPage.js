@@ -22,17 +22,16 @@ function MaingPage() {
     fetchRecipes();
   }, []);
 
-  
-  const sliderSettings = {
-    dots: true,
-    infinite: true,
-    speed: 1400,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    autoplay: true,
-    autoplaySpeed: 5000,
-    //pauseOnHover: false
-  };
+	const sliderSettings = {
+		dots: true,
+		infinite: true,
+		speed: 1400,
+		slidesToShow: 1,
+		slidesToScroll: 1,
+		autoplay: true,
+		autoplaySpeed: 5000,
+		pauseOnHover: false
+	};
 
   return (
     <div className="main">

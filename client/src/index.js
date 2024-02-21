@@ -7,6 +7,8 @@ import UserProfile from "./userComponents/UserProfile";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import MaingPage from "./mainPage Components/MainPage.js";
 import Dishes from "./components/Dishes.js";
+import UserForm from "./components/UserForm.js";
+import UserLogin from "./components/UserLogin.js";
 
 const router = createBrowserRouter([
   {
@@ -21,6 +23,14 @@ const router = createBrowserRouter([
     path: "/dishes/:dishType",
     element: <Dishes />,
   },
+  {
+    path: "/user",
+    element: <UserForm></UserForm>
+  },
+  {
+    path: "/user/login",
+    element: <UserLogin></UserLogin>
+  }
 ]);
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
