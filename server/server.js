@@ -1,7 +1,7 @@
 import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
-import Recipe from './model/Recipe.js';
+import Recipe from "./model/Recipe.js";
 import Comment from "./model/Comment.js";
 import Favorite from "./model/Favorite.js";
 import UserRecipe from "./model/UserRecipe.js";
@@ -15,7 +15,6 @@ console.log(import.meta.url);
 const __dirname = path.dirname(__filename);
 console.log(__dirname);
 
-
 const app = express();
 app.use(express.json());
 const PORT = 5000;
@@ -28,15 +27,16 @@ async function connectToMongoose() {
 }
 connectToMongoose();
 
-app.get("/api/recipes", async (req, res) => {
+app.get("/api/recipes/", async (req, res) => {
   const recipes = await Recipe.find();
-  res.json(recipes);
+
+  return res.json(recipes);
 });
 
 app.get("/api/comments", async (req, res) => {
   const comments = await Comment.find();
   res.json(comments);
-})
+});
 
 app.get("/api/favorites", async (req, res) => {
   const favorties = await Favorite.find({});
@@ -57,31 +57,60 @@ app.get("/api/users/", async (req, res, next) => {
   }
 })
 
-app.get("/api/:type", async (req, res) => {
+app.get("/api/dishes/:type", async (req, res) => {
   const dishType = req.params.type;
-  const dishes = await Recipe.find({ type: dishType });
-  res.json(dishes);
-});
+  const page = parseInt(req.query.page);
+  const recipesPerPage = 2;
+  if (dishType === "favorites") {
+    console.log(dishType);
+    const favoriteRecipesCount = await Favorite.find().count();
+    const favoriteRecipes = await Favorite.find().skip(page * recipesPerPage - recipesPerPage).limit(recipesPerPage)
+    console.log(favoriteRecipes);
+    const favoritePageCount = Math.ceil(favoriteRecipesCount / recipesPerPage)
+    return res.json({
+      pagination: {
+        recipesCount: favoriteRecipesCount,
+        favoritePageCount,
+      },
+      dishes: favoriteRecipes,
+    });
+  }
+  const recipesCount = await Recipe.find({ type: dishType }).count();
+  const pageCount = Math.ceil(recipesCount / recipesPerPage);
 
+  try {
+    const dishes = await Recipe.find({ type: dishType })
+      .skip(page * recipesPerPage - recipesPerPage)
+      .limit(recipesPerPage);
+    return res.json({
+      pagination: {
+        recipesCount,
+        pageCount,
+      },
+      dishes,
+    });
+  } catch (error) {
+    return next(error);
+  }
+});
 
 app.post("/api/comments", async (req, res) => {
   try {
     const comment = req.body.newComment;
-    const recipeId = req.body.recipeIds
+    const recipeId = req.body.recipeIds;
     const createdAt = Date.now();
     const newComment = new Comment({
       comment,
       createdAt,
-      recipe: recipeId.recipeIds
-
-    })
-    const savedComment = await newComment.save()
-    res.json(savedComment)
+      recipe: recipeId.recipeIds,
+    });
+    const savedComment = await newComment.save();
+    res.json(savedComment);
   } catch (error) {
-    console.error(error)
-    res.status(500).json({ success: false })
+    console.error(error);
+    res.status(500).json({ success: false });
   }
-})
+});
 
 app.post("/api/users", async (req, res, next) => {
   const newUser = req.body;
@@ -94,16 +123,14 @@ app.post("/api/users", async (req, res, next) => {
 })
 
 app.delete("/api/comments/:id", async (req, res) => {
-  const commentId = req.params.id
+  const commentId = req.params.id;
   try {
-    const deletedComment = await Comment.findByIdAndDelete(commentId)
-    res.json({ status: "deleted" })
+    const deletedComment = await Comment.findByIdAndDelete(commentId);
+    res.json({ status: "deleted" });
   } catch (error) {
-    console.error(error)
+    console.error(error);
   }
-})
-
-
+});
 
 app.get("/api/user/recipes/:id", async (req, res) => {
   const recipeId = req.params.id;
@@ -140,11 +167,13 @@ app.get("/api/user/recipes/:id", async (req, res) => {
 //     res.send(newUpdatedRecipe);
 //   }
 // });
-app.patch('/api/user/recipes/:id', async (req, res) => {
+app.patch("/api/user/recipes/:id", async (req, res) => {
   const recipeId = req.params.id;
-  const updatedRecipe = await UserRecipe.findByIdAndUpdate(recipeId, req.body, { new: true })
+  const updatedRecipe = await UserRecipe.findByIdAndUpdate(recipeId, req.body, {
+    new: true,
+  });
   res.send(updatedRecipe);
-})
+});
 
 app.post("/api/user/recipes", async (req, res) => {
   const mealName = req.body.mealName;
@@ -170,7 +199,6 @@ app.delete("/api/user/recipes/:id", async (req, res) => {
     return res.json({ id: recipeId });
   }
 });
-
 
 app.post("/api/favorites", async (req, res) => {
   console.log("request: ", req.body);
@@ -204,10 +232,9 @@ app.post("/api/favorites", async (req, res) => {
   }
 });
 
-
-
-app.post("/api/recipes", async (req, res) => {
+app.post("/api/recipes", async (req, res, next) => {
   console.log("Ez az update a ratingre:", req.body);
+
   try {
     const [rating, ingredientId, userVotes] = req.body;
     const updatedIngredient = await Recipe.findOneAndUpdate(
@@ -228,8 +255,9 @@ app.post("/api/recipes", async (req, res) => {
     );
     res.json(updatedIngredient);
   } catch (error) {
-    console.log(error.message);
-    res.status(500).json({ error: "something went wrong" });
+    next(error);
+    /*      console.log(error.message);
+    res.status(500).json({ error: "something went wrong" }); */
   }
 });
 
@@ -263,22 +291,18 @@ app.patch("/api/recipes/:id", async (req, res) => {
   }
 });
 
-app.delete('/api/favorites/:name', async (req, res) => {
+app.delete("/api/favorites/:name", async (req, res) => {
   const favoriteName = req.params.name;
   try {
-    const deletedFavorite = await Favorite.deleteOne({ mealName: favoriteName });
+    const deletedFavorite = await Favorite.deleteOne({
+      mealName: favoriteName,
+    });
     res.json(deletedFavorite);
   } catch (error) {
     throw new Error(error);
   }
-
-})
-
+});
 
 app.listen(PORT, () => {
   console.log(`This server is running on PORT ${PORT}`);
 });
-
-
-
-
