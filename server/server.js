@@ -27,8 +27,7 @@ async function connectToMongoose() {
 connectToMongoose();
 
 app.get("/api/recipes/", async (req, res) => {
-
-  const recipes = await Recipe.find()
+  const recipes = await Recipe.find();
 
   return res.json(recipes);
 });
@@ -46,27 +45,40 @@ app.get("/api/user/recipes", async (req, res) => {
   const recipes = await UserRecipe.find();
   res.json(recipes);
 });
-app.get("/api/:type", async (req, res, next) => {
+app.get("/api/dishes/:type", async (req, res, next) => {
   const dishType = req.params.type;
   const page = parseInt(req.query.page);
   const recipesPerPage = 2;
-  const recipesCount = await Recipe.find({type: dishType}).count()
-  const pageCount = Math.ceil(recipesCount / recipesPerPage); 
+  if (dishType === "favorites") {
+    console.log(dishType);
+    const favoriteRecipesCount = await Favorite.find().count();
+    const favoriteRecipes = await Favorite.find().skip(page * recipesPerPage - recipesPerPage).limit(recipesPerPage)
+    console.log(favoriteRecipes);
+    const favoritePageCount = Math.ceil(favoriteRecipesCount / recipesPerPage)
+    return res.json({
+      pagination: {
+        recipesCount: favoriteRecipesCount,
+        favoritePageCount,
+      },
+      dishes: favoriteRecipes,
+    });
+  }
+  const recipesCount = await Recipe.find({ type: dishType }).count();
+  const pageCount = Math.ceil(recipesCount / recipesPerPage);
 
   try {
     const dishes = await Recipe.find({ type: dishType })
-    .skip((page * recipesPerPage) - recipesPerPage)
-    .limit(recipesPerPage)
+      .skip(page * recipesPerPage - recipesPerPage)
+      .limit(recipesPerPage);
     return res.json({
       pagination: {
         recipesCount,
-        pageCount
+        pageCount,
       },
-      dishes
+      dishes,
     });
-    
   } catch (error) {
-    return next(error)
+    return next(error);
   }
 });
 
