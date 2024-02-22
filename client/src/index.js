@@ -9,6 +9,7 @@ import MaingPage from "./mainPage Components/MainPage.js";
 import Dishes from "./components/Dishes.js";
 import UserForm from "./components/UserForm.js";
 import UserLogin from "./components/UserLogin.js";
+import FavoritePage from "./components/FavoritesPage.js";
 
 const router = createBrowserRouter([
   {
@@ -30,6 +31,10 @@ const router = createBrowserRouter([
   {
     path: "/user/registration",
     element: <UserForm />
+  },
+  {
+    path: '/user/favorites',
+    element: <FavoritePage></FavoritePage>
   }
 ]);
 

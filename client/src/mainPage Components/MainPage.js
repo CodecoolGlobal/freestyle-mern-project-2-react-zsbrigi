@@ -14,24 +14,23 @@ function MaingPage() {
         const httpResponse = await fetch("/api/recipes");
         const allRecipe = await httpResponse.json();
         setRecipes(allRecipe);
-		console.log(allRecipe);
-	} catch (error) {
-		console.error(error);
-	}
-}
+      } catch (error) {
+        console.error(error);
+      }
+    }
     fetchRecipes();
   }, []);
 
-	const sliderSettings = {
-		dots: true,
-		infinite: true,
-		speed: 1400,
-		slidesToShow: 1,
-		slidesToScroll: 1,
-		autoplay: true,
-		autoplaySpeed: 5000,
-		pauseOnHover: false
-	};
+  const sliderSettings = {
+    dots: true,
+    infinite: true,
+    speed: 1400,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 5000,
+    pauseOnHover: false
+  };
 
   return (
     <div className="main">

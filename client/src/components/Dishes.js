@@ -19,7 +19,6 @@ function Dishes() {
     const httpResponse = await fetch("/api/favorites");
     const favoriteRecipes = await httpResponse.json();
     setFavorites(favoriteRecipes);
-	console.log(favoriteRecipes);
   }
 
   useEffect(() => {
@@ -29,12 +28,10 @@ function Dishes() {
         const data = await response.json();
         setRecipes(data.dishes);
         setPageCount(data.pagination.pageCount);
-        console.log(data);
       } catch (error) {
         console.error(error);
       }
     }
-    console.log(page);
     fetchdata(`/api/dishes/${dishType}?page=${page}`);
     fetchFavorites();
   }, [dishType, rating, page]);
@@ -57,18 +54,17 @@ function Dishes() {
 
   const handlerPreviousButon = () => {
     setPage((prev) => {
-      if ( page === 1) return 1;
+      if (page === 1) return 1;
       return prev - 1;
     });
   };
-  console.log(typeof page);
   const handlerNextButton = () => {
-     setPage((prev) => {
+    setPage((prev) => {
       if (page === pageCount) return prev;
       return prev + 1;
-    }); 
+    });
   };
-
+  
   return (
     <>
       <Header></Header>
@@ -93,6 +89,7 @@ function Dishes() {
         </select>
       </header>
       <div className="recipeList">
+        <h1>{favorites[0]?.userId?.name}</h1>
         {recipes.map((dish) => (
           <div className="dish" key={dish._id}>
             <h2>{dish.mealName}</h2>

@@ -11,9 +11,7 @@ dotenv.config();
 import path from "path";
 import url from "url";
 const __filename = url.fileURLToPath(import.meta.url);
-console.log(import.meta.url);
 const __dirname = path.dirname(__filename);
-console.log(__dirname);
 
 const app = express();
 app.use(express.json());
@@ -41,6 +39,7 @@ app.get("/api/favorites", async (req, res) => {
   const favorties = await Favorite.find({});
   res.json(favorties);
 });
+
 app.get("/api/user/recipes", async (req, res) => {
   const recipes = await UserRecipe.find();
   res.json(recipes);
@@ -49,8 +48,19 @@ app.get("/api/user/recipes", async (req, res) => {
 app.get("/api/users/", async (req, res, next) => {
   const queryEmail = req.query.email;
   try {
-    const users = queryEmail ? await User.findOne({ email: queryEmail }) : await User.find();
+    const users = queryEmail ? (await User.findOne({ email: queryEmail }).populate("favorites")) : (await User.find().populate("favorites"));
+    console.log(users);
     return res.json(users);
+  } catch (error) {
+    return next(error);
+  }
+})
+
+app.get("/api/loggedInUser/:id", async (req, res, next) => {
+  const { id } = req.params;
+  try {
+    const loggedInUser = await User.findById(id).populate("favorites");
+    return res.json(loggedInUser);
   } catch (error) {
     return next(error);
   }
@@ -61,10 +71,8 @@ app.get("/api/dishes/:type", async (req, res) => {
   const page = parseInt(req.query.page);
   const recipesPerPage = 2;
   if (dishType === "favorites") {
-    console.log(dishType);
     const favoriteRecipesCount = await Favorite.find().count();
     const favoriteRecipes = await Favorite.find().skip(page * recipesPerPage - recipesPerPage).limit(recipesPerPage)
-    console.log("The favorites:", favoriteRecipes);
     const favoritePageCount = Math.ceil(favoriteRecipesCount / recipesPerPage)
     return res.json({
       pagination: {
@@ -81,7 +89,6 @@ app.get("/api/dishes/:type", async (req, res) => {
     const dishes = await Recipe.find({ type: dishType })
       .skip(page * recipesPerPage - recipesPerPage)
       .limit(recipesPerPage);
-    console.log(page);
     return res.json({
       pagination: {
         recipesCount,
@@ -98,7 +105,8 @@ app.post("/api/comments", async (req, res) => {
   try {
     const comment = req.body.newComment;
     const recipeId = req.body.recipeIds;
-    const userId = req.body.userId
+    const userId = req.body.userId;
+    console.log(userId);
     const createdAt = Date.now();
     const newComment = new Comment({
       comment,
@@ -119,6 +127,20 @@ app.post("/api/users", async (req, res, next) => {
   try {
     const addUser = await User.create(newUser);
     return res.json(addUser);
+  } catch (error) {
+    return next(error);
+  }
+})
+
+app.patch("/api/users/:id", async (req, res, next) => {
+  const { id } = req.params;
+  try {
+    const updateUser = await User.findByIdAndUpdate(
+      { _id: id },
+      { $addToSet: { ...req.body } },
+      { new: true }
+    )
+    return res.json(updateUser);
   } catch (error) {
     return next(error);
   }
@@ -203,8 +225,8 @@ app.delete("/api/user/recipes/:id", async (req, res) => {
 });
 
 app.post("/api/favorites", async (req, res) => {
-  console.log("request: ", req.body);
-
+  const { userId } = req.query;
+  console.log(userId);
   const mealName = req.body.mealName;
   const ingredients = req.body.ingredients;
   const description = req.body.description;
@@ -218,6 +240,7 @@ app.post("/api/favorites", async (req, res) => {
       description,
       time,
       type,
+      userId
     });
 
     /* favorite
@@ -235,8 +258,6 @@ app.post("/api/favorites", async (req, res) => {
 });
 
 app.post("/api/recipes", async (req, res, next) => {
-  console.log("Ez az update a ratingre:", req.body);
-
   try {
     const [rating, ingredientId, userVotes] = req.body;
     const updatedIngredient = await Recipe.findOneAndUpdate(
@@ -269,7 +290,6 @@ app.patch("/api/recipes/:id", async (req, res) => {
   if (mongoose.isValidObjectId(dishId)) {
     try {
       const newRating = req.body.rating;
-      console.log("The rating in serveeeer:", newRating);
       const updatedRecipe = await Recipe.findByIdAndUpdate(
         dishId,
         {
