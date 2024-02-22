@@ -19,7 +19,7 @@ function Dishes() {
     const httpResponse = await fetch("/api/favorites");
     const favoriteRecipes = await httpResponse.json();
     setFavorites(favoriteRecipes);
-	console.log(favoriteRecipes);
+    console.log(favoriteRecipes);
   }
 
   useEffect(() => {
@@ -57,40 +57,33 @@ function Dishes() {
 
   const handlerPreviousButon = () => {
     setPage((prev) => {
-      if ( page === 1) return 1;
+      if (page === 1) return 1;
       return prev - 1;
     });
   };
   console.log(typeof page);
   const handlerNextButton = () => {
-     setPage((prev) => {
+    setPage((prev) => {
       if (page === pageCount) return prev;
       return prev + 1;
-    }); 
+    });
   };
 
   return (
     <>
       <Header></Header>
-      <header>
-        <br />
-        <br />
-        Page: {page}
-        <br />
-        PageCount: {pageCount}
-        <button onClick={() => handlerPreviousButon()}> Previous</button>
-        <button onClick={handlerNextButton}>Next</button>
-        <select value={page} onChange={(e) => setPage(Number(e.target.value))}>
-          {Array(pageCount)
-            .fill(null)
-            .map((_, index) => {
-              return (
-                <option key={index} value={index + 1}>
-                  {index + 1}
-                </option>
-              );
-            })}
-        </select>
+      <header className="Pagination">
+        <button className="Previous" onClick={() => handlerPreviousButon()}> Previous</button>
+        {[...Array(pageCount)]
+          .fill(null)
+          .map((_, index) => {
+            return (
+              <span className="paginationSpan" key={index} onClick={() => setPage(index + 1)}>
+                {index + 1}
+              </span>
+            );
+          })}
+        <button className="Next" onClick={handlerNextButton}>Next</button>
       </header>
       <div className="recipeList">
         {recipes.map((dish) => (
@@ -130,6 +123,19 @@ function Dishes() {
           </div>
         ))}
       </div>
+      <header className="Pagination">
+        <button className="Previous" onClick={() => handlerPreviousButon()}> Previous</button>
+        {[...Array(pageCount)]
+          .fill(null)
+          .map((_, index) => {
+            return (
+              <span className="paginationSpan" key={index} onClick={() => setPage(index + 1)}>
+                {index + 1}
+              </span>
+            );
+          })}
+        <button className="Next" onClick={handlerNextButton}>Next</button>
+      </header>
     </>
   );
 }

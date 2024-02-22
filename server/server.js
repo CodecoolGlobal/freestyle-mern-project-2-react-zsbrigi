@@ -27,9 +27,30 @@ async function connectToMongoose() {
 }
 connectToMongoose();
 
-app.get("/api/recipes/", async (req, res) => {
+app.get("/api/recipes", async (req, res) => {
+  const input1 = req.query.input1 && (req.query.input1)[0].toUpperCase() + (req.query.input1).slice(1).toLowerCase();
+  const input2 = req.query.input2 && (req.query.input2)[0].toUpperCase() + (req.query.input2).slice(1).toLowerCase();
+  const input3 = req.query.input3 && (req.query.input3)[0].toUpperCase() + (req.query.input3).slice(1).toLowerCase();
+  const input4 = req.query.input4 && (req.query.input4)[0].toUpperCase() + (req.query.input4).slice(1).toLowerCase();
+  const input5 = req.query.input5 && (req.query.input5)[0].toUpperCase() + (req.query.input5).slice(1).toLowerCase();
+  const userIngredients = [input1, input2, input3, input4, input5];
   const recipes = await Recipe.find();
-  return res.json(recipes);
+  console.log(Object.keys(req.query).length);
+  if (Object.keys(req.query).length > 0) {
+    console.log(req.query);
+    const resultRecipes = recipes.filter(recipe => {
+      const recipeIngredients = recipe.ingredients.map(ingredient => ingredient.name);
+      if (userIngredients.every(ingredient => {
+        return recipeIngredients.some(recipeIngredient => recipeIngredient.includes(ingredient))
+      })) {
+        return true;
+      }
+    })
+    return res.json(resultRecipes);
+  }
+  if (Object.keys(req.query).length === 0) {
+    return res.json(recipes)
+  }
 });
 
 app.get("/api/comments", async (req, res) => {
@@ -61,10 +82,8 @@ app.get("/api/dishes/:type", async (req, res) => {
   const page = parseInt(req.query.page);
   const recipesPerPage = 2;
   if (dishType === "favorites") {
-    console.log(dishType);
     const favoriteRecipesCount = await Favorite.find().count();
     const favoriteRecipes = await Favorite.find().skip(page * recipesPerPage - recipesPerPage).limit(recipesPerPage)
-    console.log("The favorites:", favoriteRecipes);
     const favoritePageCount = Math.ceil(favoriteRecipesCount / recipesPerPage)
     return res.json({
       pagination: {
@@ -81,7 +100,6 @@ app.get("/api/dishes/:type", async (req, res) => {
     const dishes = await Recipe.find({ type: dishType })
       .skip(page * recipesPerPage - recipesPerPage)
       .limit(recipesPerPage);
-    console.log(page);
     return res.json({
       pagination: {
         recipesCount,
@@ -203,7 +221,6 @@ app.delete("/api/user/recipes/:id", async (req, res) => {
 });
 
 app.post("/api/favorites", async (req, res) => {
-  console.log("request: ", req.body);
 
   const mealName = req.body.mealName;
   const ingredients = req.body.ingredients;
@@ -235,8 +252,6 @@ app.post("/api/favorites", async (req, res) => {
 });
 
 app.post("/api/recipes", async (req, res, next) => {
-  console.log("Ez az update a ratingre:", req.body);
-
   try {
     const [rating, ingredientId, userVotes] = req.body;
     const updatedIngredient = await Recipe.findOneAndUpdate(
@@ -269,7 +284,6 @@ app.patch("/api/recipes/:id", async (req, res) => {
   if (mongoose.isValidObjectId(dishId)) {
     try {
       const newRating = req.body.rating;
-      console.log("The rating in serveeeer:", newRating);
       const updatedRecipe = await Recipe.findByIdAndUpdate(
         dishId,
         {
