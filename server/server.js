@@ -29,6 +29,16 @@ async function connectToMongoose() {
 connectToMongoose();
 
 app.get("/api/recipes", async (req, res) => {
+  const input1 = req.query.input1
+  const input2 = req.query.input2
+  const input3 = req.query.input3
+  const input4 = req.query.input4
+  const input5 = req.query.input5
+
+  if (req.query) {
+    // const recipes = Recipe.find({ ingredients: { $elemMatch: { name: input1 } } })
+    console.log(req.query);
+  }
   const recipes = await Recipe.find();
   res.json(recipes);
 });

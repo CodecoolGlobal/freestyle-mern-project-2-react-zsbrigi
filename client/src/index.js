@@ -7,6 +7,7 @@ import UserProfile from "./userComponents/UserProfile";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import MaingPage from "./mainPage Components/MainPage.js";
 import Dishes from "./components/Dishes.js";
+import Fridge from "./components/Fridge.js";
 
 const router = createBrowserRouter([
   {
@@ -21,6 +22,10 @@ const router = createBrowserRouter([
     path: "/dishes/:dishType",
     element: <Dishes />,
   },
+  {
+    path: "/fridge",
+    element: <Fridge />
+  }
 ]);
 
 const root = ReactDOM.createRoot(document.getElementById("root"));

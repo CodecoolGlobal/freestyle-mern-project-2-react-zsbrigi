@@ -2,8 +2,9 @@ import { useState, useEffect } from "react"
 
 
 function CommentSection(recipeIds) {
-
+    console.log(recipeIds);
     const recipes = Object.values(recipeIds).join("")
+    console.log(recipes);
 
     const [comments, setComments] = useState([])
     const [newComment, setNewComment] = useState("")
