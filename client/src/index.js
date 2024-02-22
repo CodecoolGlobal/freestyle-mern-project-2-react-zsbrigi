@@ -8,6 +8,8 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import MaingPage from "./mainPage Components/MainPage.js";
 import Dishes from "./components/Dishes.js";
 import Fridge from "./components/Fridge.js";
+import UserForm from "./components/UserForm.js";
+import UserLogin from "./components/UserLogin.js";
 
 const router = createBrowserRouter([
   {
@@ -25,6 +27,14 @@ const router = createBrowserRouter([
   {
     path: "/fridge",
     element: <Fridge />
+  },
+  {
+    path: "/user/login",
+    element: <UserLogin />
+  },
+  {
+    path: "/user/registration",
+    element: <UserForm />
   }
 ]);
 
