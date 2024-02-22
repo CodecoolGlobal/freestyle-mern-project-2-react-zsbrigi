@@ -68,25 +68,18 @@ function Dishes() {
   return (
     <>
       <Header></Header>
-      <header>
-        <br />
-        <br />
-        Page: {page}
-        <br />
-        PageCount: {pageCount}
-        <button onClick={() => handlerPreviousButon()}> Previous</button>
-        <button onClick={handlerNextButton}>Next</button>
-        <select value={page} onChange={(e) => setPage(Number(e.target.value))}>
-          {Array(pageCount)
-            .fill(null)
-            .map((_, index) => {
-              return (
-                <option key={index} value={index + 1}>
-                  {index + 1}
-                </option>
-              );
-            })}
-        </select>
+      <header className="Pagination">
+        <button className="Previous" onClick={() => handlerPreviousButon()}> Previous</button>
+        {[...Array(pageCount)]
+          .fill(null)
+          .map((_, index) => {
+            return (
+              <span className="paginationSpan" key={index} onClick={() => setPage(index + 1)}>
+                {index + 1}
+              </span>
+            );
+          })}
+        <button className="Next" onClick={handlerNextButton}>Next</button>
       </header>
       <div className="recipeList">
         <h1>{favorites[0]?.userId?.name}</h1>
@@ -127,6 +120,19 @@ function Dishes() {
           </div>
         ))}
       </div>
+      <header className="Pagination">
+        <button className="Previous" onClick={() => handlerPreviousButon()}> Previous</button>
+        {[...Array(pageCount)]
+          .fill(null)
+          .map((_, index) => {
+            return (
+              <span className="paginationSpan" key={index} onClick={() => setPage(index + 1)}>
+                {index + 1}
+              </span>
+            );
+          })}
+        <button className="Next" onClick={handlerNextButton}>Next</button>
+      </header>
     </>
   );
 }

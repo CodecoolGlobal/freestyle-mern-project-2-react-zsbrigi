@@ -7,6 +7,7 @@ import UserProfile from "./userComponents/UserProfile";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import MaingPage from "./mainPage Components/MainPage.js";
 import Dishes from "./components/Dishes.js";
+import Fridge from "./components/Fridge.js";
 import UserForm from "./components/UserForm.js";
 import UserLogin from "./components/UserLogin.js";
 import FavoritePage from "./components/FavoritesPage.js";
@@ -23,6 +24,10 @@ const router = createBrowserRouter([
   {
     path: "/dishes/:dishType",
     element: <Dishes />,
+  },
+  {
+    path: "/fridge",
+    element: <Fridge />
   },
   {
     path: "/user/login",
