@@ -1,7 +1,5 @@
 import { useEffect, useState } from "react";
 import IngredientsTable from "./IngredientsTable";
-import AddToFavoriteButton from "./AddToFavoriteButton";
-import HandleRatingStar from "./RatingStar";
 import GetSumOfRatings from "./RatingCalculator";
 import CommentSection from "./Comments";
 import Header from "../mainPage Components/Header";
