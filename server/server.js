@@ -11,9 +11,7 @@ dotenv.config();
 import path from "path";
 import url from "url";
 const __filename = url.fileURLToPath(import.meta.url);
-console.log(import.meta.url);
 const __dirname = path.dirname(__filename);
-console.log(__dirname);
 
 const app = express();
 app.use(express.json());
@@ -35,9 +33,7 @@ app.get("/api/recipes", async (req, res) => {
   const input5 = req.query.input5 && (req.query.input5)[0].toUpperCase() + (req.query.input5).slice(1).toLowerCase();
   const userIngredients = [input1, input2, input3, input4, input5];
   const recipes = await Recipe.find();
-  console.log(Object.keys(req.query).length);
   if (Object.keys(req.query).length > 0) {
-    console.log(req.query);
     const resultRecipes = recipes.filter(recipe => {
       const recipeIngredients = recipe.ingredients.map(ingredient => ingredient.name);
       if (userIngredients.every(ingredient => {
@@ -62,6 +58,7 @@ app.get("/api/favorites", async (req, res) => {
   const favorties = await Favorite.find({});
   res.json(favorties);
 });
+
 app.get("/api/user/recipes", async (req, res) => {
   const recipes = await UserRecipe.find();
   res.json(recipes);
@@ -70,8 +67,18 @@ app.get("/api/user/recipes", async (req, res) => {
 app.get("/api/users/", async (req, res, next) => {
   const queryEmail = req.query.email;
   try {
-    const users = queryEmail ? await User.findOne({ email: queryEmail }) : await User.find();
+    const users = queryEmail ? (await User.findOne({ email: queryEmail }).populate("favorites")) : (await User.find().populate("favorites"));
     return res.json(users);
+  } catch (error) {
+    return next(error);
+  }
+})
+
+app.get("/api/loggedInUser/:id", async (req, res, next) => {
+  const { id } = req.params;
+  try {
+    const loggedInUser = await User.findById(id).populate("favorites");
+    return res.json(loggedInUser);
   } catch (error) {
     return next(error);
   }
@@ -116,7 +123,7 @@ app.post("/api/comments", async (req, res) => {
   try {
     const comment = req.body.newComment;
     const recipeId = req.body.recipeIds;
-    const userId = req.body.userId
+    const userId = req.body.userId;
     const createdAt = Date.now();
     const newComment = new Comment({
       comment,
@@ -137,6 +144,20 @@ app.post("/api/users", async (req, res, next) => {
   try {
     const addUser = await User.create(newUser);
     return res.json(addUser);
+  } catch (error) {
+    return next(error);
+  }
+})
+
+app.patch("/api/users/:id", async (req, res, next) => {
+  const { id } = req.params;
+  try {
+    const updateUser = await User.findByIdAndUpdate(
+      { _id: id },
+      { $addToSet: { ...req.body } },
+      { new: true }
+    )
+    return res.json(updateUser);
   } catch (error) {
     return next(error);
   }
@@ -221,7 +242,7 @@ app.delete("/api/user/recipes/:id", async (req, res) => {
 });
 
 app.post("/api/favorites", async (req, res) => {
-
+  const { userId } = req.query;
   const mealName = req.body.mealName;
   const ingredients = req.body.ingredients;
   const description = req.body.description;
@@ -235,6 +256,7 @@ app.post("/api/favorites", async (req, res) => {
       description,
       time,
       type,
+      userId
     });
 
     /* favorite

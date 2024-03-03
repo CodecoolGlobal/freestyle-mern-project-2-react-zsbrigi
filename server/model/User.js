@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose, { mongo } from "mongoose";
 
 const { Schema, model } = mongoose;
 
@@ -13,20 +13,12 @@ const userSchema = new Schema({
 		required: true
 	},
 	password: String,
-	comments: [
+	favorites: [
 		{
-			type: mongoose.Schema.Types.ObjectId,
-			ref: "Comment"
-		}
-	],
-	ratings: [
-		{
-			type: mongoose.Schema.Types.ObjectId,
-			ref: "Recipe"
+			type: Schema.Types.ObjectId,
+			ref: 'Recipe'
 		}
 	]
-
-
 })
 
 export default model("User", userSchema);

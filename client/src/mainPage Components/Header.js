@@ -37,7 +37,7 @@ function Header() {
 				<li><Link to="/dishes/pasta" className={isCurrentPage('pasta') ? 'active' : ''}>Pasta</Link></li>
 				<li><Link to="/dishes/vegetarian" className={isCurrentPage('vegetarian') ? 'active' : ''}>Vegetarian</Link></li>
 				<li><Link to="/dishes/dessert" className={isCurrentPage('dessert') ? 'active' : ''}>Dessert</Link></li>
-				<li><Link to="/dishes/favorites" className={isCurrentPage('favorites') ? 'active' : ''}>Favorites</Link></li>
+				<li><Link to="/user/favorites" className={isCurrentPage('favorites') ? 'active' : ''}>Favorites</Link></li>
 				<li><Link to="/user/recipes" className={isCurrentPage('user') ? 'active' : ''}>Profile</Link></li>
 				<li><Link to="/user/login" >Login</Link></li>
 				<li><Link to="/user/registration" >Sign Up</Link></li>

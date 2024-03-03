@@ -61,23 +61,21 @@ export default function HandleRatingStar({ ingredient, onSetRatings }) {
       {[...Array(5)].map((star, index) => {
         const currentRate = index + 1;
         return (
-          <>
-            <label>
-              <input
-                type="radio"
-                name="rating"
-                value={currentRate}
-                onClick={() => setRating(currentRate)}
-              />
-              <FaStar
-                className="star"
-                size={35}
-                color={currentRate <= (hover || rating) ? "yellow" : "grey"}
-                onMouseEnter={() => setHover(currentRate)}
-                onMouseLeave={() => setHover(null)}
-              />
-            </label>
-          </>
+          <label key={index}>
+            <input
+              type="radio"
+              name="rating"
+              value={currentRate}
+              onClick={() => setRating(currentRate)}
+            />
+            <FaStar
+              className="star"
+              size={35}
+              color={currentRate <= (hover || rating) ? "yellow" : "grey"}
+              onMouseEnter={() => setHover(currentRate)}
+              onMouseLeave={() => setHover(null)}
+            />
+          </label>
         );
       })}
       <button className="saveRatingButton" onClick={() => handleRating()}>Save Rating</button>
