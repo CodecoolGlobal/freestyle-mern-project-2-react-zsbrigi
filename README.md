@@ -2,15 +2,33 @@
 
 The Recipe Storage Application is a full-stack web application developed using the MERN stack (MongoDB, Express.js, React, and Node.js). It allows users to register, upload recipes, search for recipes, save their favorite recipes, add comments to others' recipes, and use a feature called "What is in my fridge" to find recipes based on available ingredients. The application also includes pagination and a rating system for recipes.
 
+This project was developed by a team of five. Each team member contributed to all aspects of the project, from backend development, database management to frontend design.
+*This project was developed after 6 months of studying coding.*
+
+Developed by:
+
+- [Eszter Fodor](https://github.com/eszti9902)
+- [Brigitta Zsugonics](https://github.com/zsbrigi)
+- [Roland Keszeg](https://github.com/keszegroland)
+- [Andor Margitics](https://github.com/mrgitics)
+- [Vazul Magyar](https://github.com/Vazul15)
+
 ## Features
 - **User Registration:** Register new users.
 - **Recipe Management:** Upload and manage recipes.
-- **Search Recipes:** Search for recipes based on keywords.
 - **Favorite Recipes:** Save recipes as favorites.
-- **Comments:** Add and view comments on recipes.
-- **"What is in my fridge":** Find recipes based on ingredients entered.
-- **Pagination:** Navigate through pages of search results and recipe lists.
-- **Recipe Rating:** Rate recipes.
+- **Main page:**
+    - Detail: Displaying recipes with moving pagination.
+    - Visual: ![MainPage](.//readme_images/fff_mainpage.png)
+- **Profile page:**
+    - Detail: Displaying own recipes and uploading form for it.
+    - Visual: ![ProfilePage](.//readme_images/fff_userprofile_addnewrecipe.png)
+- **Comments and rating:**
+    - Detail: Add and view comments on recipes, and ratings.
+    - Visual: ![CommentImage](.//readme_images/fff_commentandstar.png)
+- **"What is in my fridge":**
+    - Detail: Find recipes based on ingredients entered.
+    - Visual: ![Fridge](.//readme_images/fff_fridge.png)
 
 ## Technologies Used
 - **Backend:** Node.js, Express.js
@@ -26,6 +44,7 @@ Built with React, this part handles the user interface and interactions.
 
 - ### Backend:
 Built with Node.js and Express.js, this part manages the API and handles data processing.
+
 - ### Database:
 MongoDB is used to store user and recipe data.
 
@@ -35,14 +54,9 @@ MongoDB is used to store user and recipe data.
 ### Backend Setup:
 - **Navigate to the backend directory:** `cd backend`
 - **Install dependencies using npm:** `npm install`
-- Create a .env file with your database configuration and other environment variables.
-**Start the backend server:** `npm run dev`
+- **Create .env files for the database in backend with the following variables:** `URL='mongodb+srv://<username>:<password>@<cluster>.mongodb.net/Recipes'`
+- **Start the backend server:** `npm run dev`
 ### Frontend Setup:
 - **Navigate to the frontend directory:** `cd ../frontend`
 - **Install dependencies using npm:** `npm install`
 - **Start the React development server:** `npm start`
-### Environment Variables
-- **Create .env files for the database in backend with the following variables:** `MONGO_URI=your_mongodb_connection_string`
-
-### Development Team
-This project was developed by a team of five. Each team member contributed to all aspects of the project, from backend development, database management to frontend design
