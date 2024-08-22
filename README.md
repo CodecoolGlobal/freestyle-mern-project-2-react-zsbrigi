@@ -19,16 +19,16 @@ Developed by:
 - **Favorite Recipes:** Save recipes as favorites.
 - **Main page:**
     - Detail: Displaying recipes with moving pagination.
-    - Visual: ![MainPage](.//readme_images/fff_mainpage.png)
+    - Visual: ![MainPage](./readme_images/fff_main_page.png)
 - **Profile page:**
     - Detail: Displaying own recipes and uploading form for it.
-    - Visual: ![ProfilePage](.//readme_images/fff_userprofile_addnewrecipe.png)
+    - Visual: ![ProfilePage](./readme_images/fff_userprofile_addnew_recipe.png)
 - **Comments and rating:**
     - Detail: Add and view comments on recipes, and ratings.
-    - Visual: ![CommentImage](.//readme_images/fff_commentandstar.png)
+    - Visual: ![CommentImage](./readme_images/fff_comment_and_star.png)
 - **"What is in my fridge":**
     - Detail: Find recipes based on ingredients entered.
-    - Visual: ![Fridge](.//readme_images/fff_fridge.png)
+    - Visual: ![Fridge](./readme_images/fff_whats_in_my_fridge.png)
 
 ## Technologies Used
 - **Backend:** Node.js, Express.js
