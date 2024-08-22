@@ -52,11 +52,11 @@ MongoDB is used to store user and recipe data.
 - **Clone the repository:** `git clone https://github.com/CodecoolGlobal/freestyle-mern-project-2-react-zsbrigi`
 - **Navigate to the project directory:** `cd recipe-storage-app`
 ### Backend Setup:
-- **Navigate to the backend directory:** `cd backend`
+- **Navigate to the backend directory:** `cd server`
 - **Install dependencies using npm:** `npm install`
 - **Create .env files for the database in backend with the following variables:** `URL='mongodb+srv://<username>:<password>@<cluster>.mongodb.net/Recipes'`
 - **Start the backend server:** `npm run dev`
 ### Frontend Setup:
-- **Navigate to the frontend directory:** `cd ../frontend`
+- **Navigate to the frontend directory:** `cd ../client`
 - **Install dependencies using npm:** `npm install`
 - **Start the React development server:** `npm start`
