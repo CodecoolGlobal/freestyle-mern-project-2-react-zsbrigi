@@ -4,11 +4,6 @@ body {
   font-family: "Haas Grot Text R Web", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
-/* ul {
-  list-style-position: inside;
-  padding-left: 0;
-} */
-
 table {
   border: 1px solid black;
   margin: auto;
@@ -215,14 +210,9 @@ button:hover {
   font-style: italic;
 }
 
-/* Media queries for responsiveness */
+
 
 @media only screen and (max-width: 768px) {
-  /* .navbar li {
-    padding: 0 10px;
-    font-size: 14px;
-  } */
-
   .flexBox {
     width: 90%;
   }

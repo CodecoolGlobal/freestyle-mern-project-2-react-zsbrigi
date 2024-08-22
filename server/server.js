@@ -179,35 +179,6 @@ app.get("/api/user/recipes/:id", async (req, res) => {
   res.send(recipe);
 });
 
-// app.patch('/user/recipes/:id', async (req, res) => {
-//   const recipeId = req.params.id;
-//   const editedRecipe = await UserRecipe.findById(recipeId)
-//   editedRecipe.mealName = req.body.mealName || editedRecipe.mealName;
-//   editedRecipe.img = req.body.img || editedRecipe.img;
-//   editedRecipe.ingredients = req.body.ingredients || editedRecipe.ingredients;
-//   editedRecipe.description = req.body.description || editedRecipe.description;
-//   editedRecipe.time = req.body.time || editedRecipe.time;
-//   await editedRecipe.save();
-//   res.send(editedRecipe);
-// })
-
-// app.patch("/user/recipes/:id", async (req, res) => {
-//   const recipeId = req.params.id;
-//   if (recipeId !== -1) {
-//     // const updatedRecipe = {
-//     //   mealName: recipe.mealName,
-//     //   img: recipe.img,
-//     //   ingredients: recipe.ingredients,
-//     //   description: recipe.description,
-//     //   time: recipe.time,
-//     // };
-//     const newUpdatedRecipe = await UserRecipe.updateOne(
-//       { _id: recipeId },
-//       { $set: req.body }, { new: true }
-//     );
-//     res.send(newUpdatedRecipe);
-//   }
-// });
 app.patch("/api/user/recipes/:id", async (req, res) => {
   const recipeId = req.params.id;
   const updatedRecipe = await UserRecipe.findByIdAndUpdate(recipeId, req.body, {
@@ -259,13 +230,6 @@ app.post("/api/favorites", async (req, res) => {
       userId
     });
 
-    /* favorite
-      .save()
-      .then((favorite) => res.json(favorite))
-      .catch((err) => {
-        res.status(400).json({ success: false });
-      }); */
-
     const savedToFavorites = await favorite.save();
     res.json(savedToFavorites);
   } catch (error) {
@@ -295,8 +259,6 @@ app.post("/api/recipes", async (req, res, next) => {
     res.json(updatedIngredient);
   } catch (error) {
     next(error);
-    /*      console.log(error.message);
-    res.status(500).json({ error: "something went wrong" }); */
   }
 });
 
