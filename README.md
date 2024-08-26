@@ -14,11 +14,11 @@ Developed by:
 - [Vazul Magyar](https://github.com/Vazul15)
 
 ## Features
-- **User Registration:** Register new users.
-- **Recipe Management:** Upload and manage recipes.
-- **Favorite Recipes:** Save recipes as favorites.
-- **Main page:**
-    - Detail: Displaying recipes with moving pagination.
+- **User Registration**
+- **Recipe Management**
+- **Favorite Recipes**
+- **Moving pagination:**
+    - Detail: Displaying recipes with moving pagination on the main page.
     - Visual: ![MainPage](./readme_images/fff_main_page.png)
 - **Profile page:**
     - Detail: Displaying own recipes and uploading form for it.
@@ -49,8 +49,8 @@ Built with Node.js and Express.js, this part manages the API and handles data pr
 MongoDB is used to store user and recipe data.
 
 ## Setup and Installation
-- **Clone the repository:** `git clone https://github.com/CodecoolGlobal/freestyle-mern-project-2-react-zsbrigi`
-- **Navigate to the project directory:** `cd recipe-storage-app`
+- **Clone the repository to a desired directory:** `git clone git@github.com:CodecoolGlobal/freestyle-mern-project-2-react-zsbrigi.git`
+- **Navigate to the project directory:** `cd <directory>`
 ### Backend Setup:
 - **Navigate to the backend directory:** `cd server`
 - **Install dependencies using npm:** `npm install`
