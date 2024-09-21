@@ -25,7 +25,7 @@ Developed by:
     ![ProfilePage](./readme_images/fff_userprofile_addnew_recipe.png)
 - **Comments and rating:**
     - Detail: Add and view comments on recipes, and ratings.
-    - Visual: ![CommentImage](./readme_images/fff_comment_and_star.png)
+    ![CommentImage](./readme_images/fff_comment_and_star.png)
 - **"What is in my fridge":**
     - Detail: Find recipes based on ingredients entered.
     ![Fridge](./readme_images/fff_whats_in_my_fridge.png)
@@ -112,8 +112,8 @@ MongoDB is used to store user and recipe data.
 [MongoDB]: https://img.shields.io/badge/MongoDB-001d3d?style=for-the-badge&logo=mongodb&logoColor=00E36A
 [mongo-url]: https://www.mongodb.com/
 
-[Mongoose]: https://img.shields.io/badge/Mongoose-20232A?style=for-the-badge&logo=mongoose&logoColor=a4161a
+[Mongoose]: https://img.shields.io/badge/Mongoose-a4161a?style=for-the-badge&logo=mongoose&logoColor=white
 [mongoose-url]: https://mongoosejs.com/
 
-[react-router]: https://img.shields.io/badge/React%20Router-20232A?style=for-the-badge&logo=reactrouter&logoColor=e5383b
+[react-router]: https://img.shields.io/badge/React%20Router-e5383b?style=for-the-badge&logo=reactrouter&logoColor=white
 [reactrouter-url]: https://reactrouter.com/en/main
