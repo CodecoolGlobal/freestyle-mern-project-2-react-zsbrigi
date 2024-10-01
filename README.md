@@ -73,10 +73,11 @@ MongoDB is used to store user and recipe data.
     ```bash
     npm install
     ```
-- **Create .env files for the database in backend with the following variables:**
-    ```bash
-    URL='mongodb+srv://<username>:<password>@<cluster>.mongodb.net/Recipes'
-    ```
+- Enter your configuration values in the provided **.env.sample** file:
+    - - Replace `<USERNAME>`, `<PASSWORD>`, and `<CLUSTER_URL>` with your MongoDB credentials
+    
+- After entering your details, rename the file from `.env.sample` to `.env`.
+
 - **Start the backend server:**
     ```bash
     npm run dev
