@@ -21,7 +21,7 @@ app.use(express.static(path.join(__dirname, "../client")));
 
 async function connectToMongoose() {
   await mongoose.connect(process.env.URL);
-  console.log("The server is connected.");
+  console.log("The database is connected.");
 }
 connectToMongoose();
 
